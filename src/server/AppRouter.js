@@ -4,6 +4,8 @@
 import * as util from 'util';
 import { Router, Request, Response } from "express";
 import { USER_ROUTER } from "../app/routes/UserRouter";
+import { SESSION_ROUTER } from "../app/routes/SessionRouter";
+import { RESTAURANT_ROUTER } from "../app/routes/RestaurantRouter";
 
 export class AppRouter {
 
@@ -33,6 +35,8 @@ export class AppRouter {
 
         //publish services
         router.use("/", APP_ROUTER);
+        router.use("/", SESSION_ROUTER);
         router.use("/user", USER_ROUTER);
+        router.use("/restaurant", RESTAURANT_ROUTER);
     }
 }

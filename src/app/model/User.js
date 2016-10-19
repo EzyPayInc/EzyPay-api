@@ -3,13 +3,19 @@
  */
 export class User {
 
-    constructor(idUser, name, lastname, phoneNumber, email, password) {
+    constructor(idUser, name, lastname, phoneNumber, email, password, cardNumber, cvv, expirationDate, uuid, isActive) {
         this.idUser = idUser;
         this.name = name;
         this.lastname = lastname;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.cardNumber = cardNumber;
+        this.cvv = cvv;
+        this.expirationDate = expirationDate;
+        this.uuid = uuid;
+        this.isActive = isActive;
+
     }
 
     getIdUser() {
@@ -35,4 +41,17 @@ export class User {
     getPassword() {
         return this.password;
     }
+
+    getCardNumber() {
+        return this.cardNumber;
+    }
+
+    getCVV() {
+        return this.cvv;
+    }
+
+    getExpirationDate() {
+        return this.expirationDate;
+    }
+
 }

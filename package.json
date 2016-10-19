@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./src/server/wwww.js --presets es2015",
+    "dev": "nodemon --exec babel-node src/server/www --presets es2015",
     "prestart": "babel src -d dist --presets es2015",
-    "start": "node dist/server/wwww"
+    "start": "node dist/server/www"
   },
   "author": "EzyPay Inc.",
   "license": "ISC",
