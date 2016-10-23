@@ -13,10 +13,10 @@ export class SessionService {
         let userData = new UserData();
         userData.getUserByEmailAndPassword(req, function (err, rows) {
             if(!err) {
-                if(rows.length < 0){
+                if(rows.length > 0){
                     res.status(200).json(rows);
                 } else {
-                    var response = {"message": "User has not been registered in EzyPay"};
+                    var response = {"message": "User has not been registered in EzyPay", "rows": rows};
                     res.status(200).json(response);
                 }
 

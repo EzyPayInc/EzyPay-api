@@ -6,16 +6,9 @@ export class ConnectionHandler {
         this.poolConnection = new PoolConnection();
     }
 
-    queryGetData(query, callback){
+    query(query, values, callback){
         this.poolConnection.pool.getConnection(function (err, connection) {
-            connection.query(query, callback);
-            connection.release();
-        });
-    }
-
-    queryInsertData(query, entity, callback){
-        this.poolConnection.pool.getConnection(function (err, connection) {
-           connection.query(query,entity, callback);
+           connection.query(query,values, callback);
             connection.release();
         });
     }

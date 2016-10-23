@@ -7,4 +7,5 @@ import { RestaurantService } from "../services/RestaurantService";
 export const RESTAURANT_ROUTER = router();
 var service = new RestaurantService();
 
-RESTAURANT_ROUTER.post("/create", service.createRestaurant);
+RESTAURANT_ROUTER.post("/", service.createRestaurant);
+RESTAURANT_ROUTER.put("/", service.updateRestaurant)

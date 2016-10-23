@@ -20,4 +20,17 @@ export class RestaurantService {
             }
         });
     }
+
+    updateRestaurant(req, res) {
+        let restaurantData = new RestaurantData();
+        restaurantData.updateRestaurant(req, function (err, result) {
+            if(!err) {
+                var response = {"response": "User was updated successfully"};
+                res.status(200).json(response);
+            } else {
+                var response = {"error": err.message};
+                res.status(500).json(response);
+            }
+        });
+    }
 }
