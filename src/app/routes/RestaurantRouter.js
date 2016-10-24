@@ -8,4 +8,4 @@ export const RESTAURANT_ROUTER = router();
 var service = new RestaurantService();
 
 RESTAURANT_ROUTER.post("/", service.createRestaurant);
-RESTAURANT_ROUTER.put("/", service.updateRestaurant)
+RESTAURANT_ROUTER.put("/", service.updateRestaurant);
