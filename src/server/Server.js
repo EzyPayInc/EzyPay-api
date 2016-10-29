@@ -1,5 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var passport = require('passport');
+var session = require('express-session');
 import { AppRouter } from "./AppRouter";
 
 class Server {
@@ -21,6 +23,14 @@ class Server {
         this.app.use(bodyParser.urlencoded({
             extended: true
         }));
+        this.app.use(passport.initialize());
+        this.app.use(session({
+            secret: 'Super Secret Session Key',
+            saveUninitialized: true,
+            resave: true
+        }));
+
+
     }
 
     routes() {

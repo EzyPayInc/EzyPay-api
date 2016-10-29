@@ -14,9 +14,9 @@ export class UserData {
         this.connectionHandler.query(query, callback);
     }
 
-    getUserByEmailAndPassword(req, callback) {
-        let query = "SELECT * FROM tb_user WHERE email= '"+ req.body.email + "' AND password= '"+ req.body.password + "';";
-        this.connectionHandler.query(query, callback);
+    getUserByEmail(email, callback) {
+        let query = "SELECT * FROM tb_user WHERE email = ?";
+        this.connectionHandler.query(query,[email], callback);
     }
 
     insertUser(req, callback) {
@@ -39,16 +39,19 @@ export class UserData {
     }
 
     updateUser(req, callback) {
+        console.log("llega aca");
         let user = new User(req.body.idUser, req.body.name, req.body.lastname, req.body.phoneNumber, req.body.email, req.body.password,
             req.body.cardNumber, req.body.cvv, req.body.expirationDate, req.body.uuid, "", true);
-        console.log(req);
         let query = "UPDATE tb_user set ? WHERE idUser = ? ";
         let connectionHandler = this.connectionHandler;
 
         this.getUserByID(req.body.idUser, function (err, result) {
             if(err) return callback(err);
 
-            user.avatar = result.avatar;
+            err = {'message': 'User does not exit'};
+            if(result.length <= 0) return callback(err);
+
+            user.avatar = result[0].avatar;
             if(result[0].password === user.password) {
                 connectionHandler.query(query, [user, req.body.idUser], callback);
             } else  {
@@ -59,7 +62,7 @@ export class UserData {
                         if (err) return callback(err);
 
                         user.password = hash;
-                        connectionHandler.query(query, restaurant, callback);
+                        connectionHandler.query(query, [user, req.body.idUser], callback);
 
                     });
                 });

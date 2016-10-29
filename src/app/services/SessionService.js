@@ -11,7 +11,7 @@ export class SessionService {
 
     loginUser(req, res) {
         let userData = new UserData();
-        userData.getUserByEmailAndPassword(req, function (err, rows) {
+        /*userData.getUserByEmailAndPassword(req, function (err, rows) {
             if(!err) {
                 if(rows.length > 0){
                     res.status(200).json(rows);
@@ -24,7 +24,7 @@ export class SessionService {
                 var response = {"error": err.message};
                 res.status(500).json(response);
             }
-        });
+        });*/
     }
 
     logout(req, res) {

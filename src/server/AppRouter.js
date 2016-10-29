@@ -7,6 +7,8 @@ import { USER_ROUTER } from "../app/routes/UserRouter";
 import { SESSION_ROUTER } from "../app/routes/SessionRouter";
 import { RESTAURANT_ROUTER } from "../app/routes/RestaurantRouter";
 import { TABLE_ROUTER } from "../app/routes/TableRouter";
+import { CLIENT_ROUTER  } from "../app/routes/ClientRouter";
+import { OAUTH2_ROUTER  } from "../app/routes/Oauth2Router";
 
 export class AppRouter {
 
@@ -40,5 +42,7 @@ export class AppRouter {
         router.use("/user", USER_ROUTER);
         router.use("/restaurant", RESTAURANT_ROUTER);
         router.use("/table", TABLE_ROUTER);
+        router.use("/clients", CLIENT_ROUTER);
+        router.use("/oauth2", OAUTH2_ROUTER);
     }
 }
