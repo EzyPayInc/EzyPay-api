@@ -15,6 +15,7 @@ export class UserData {
     }
 
     getUserByEmail(email, callback) {
+        console.log(email);
         let query = "SELECT * FROM tb_user WHERE email = ?";
         this.connectionHandler.query(query,[email], callback);
     }
