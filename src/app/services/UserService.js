@@ -19,6 +19,7 @@ export class UserService {
                 res.status(200).json(response);
             } else {
                 var response = {"error": err.message};
+                console.log(err);
                 res.status(500).json(response);
             }
         });
