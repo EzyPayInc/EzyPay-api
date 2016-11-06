@@ -5,6 +5,7 @@ import { UserData } from "../data/UserData";
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+import { User } from '../model/User';
 
 export class UserService {
 
@@ -13,7 +14,8 @@ export class UserService {
 
     insertUser(req, res){
         var userData =  new UserData();
-        userData.insertUser(req, function (err, result) {
+        var user = User.initWithObject(req.body);
+        userData.insertUser(user, function (err, result) {
             if(!err) {
                 var response = {"response": result.insertId};
                 res.status(200).json(response);

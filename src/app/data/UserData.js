@@ -20,11 +20,9 @@ export class UserData {
         this.connectionHandler.query(query,[email], callback);
     }
 
-    insertUser(req, callback) {
-        let user = new User(0, req.body.name, req.body.lastname, req.body.phoneNumber, req.body.email, req.body.password,
-            req.body.cardNumber, req.body.cvv, req.body.expirationDate, req.body.uuid, "", true);
-        let query = "INSERT INTO tb_user SET ?";
-        let connectionHandler = this.connectionHandler;
+    insertUser(user, callback) {
+        var query = "INSERT INTO tb_user SET ?";
+        var connectionHandler = this.connectionHandler;
 
         //encrypt password
         bcrypt.genSalt(5, function (err, salt) {
