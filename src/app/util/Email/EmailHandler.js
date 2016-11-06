@@ -17,12 +17,12 @@ export class EmailHandler {
         this.transporter = nodemailer.createTransport(smtpConfig, 'smtps://user%40gmail.com:pass@smtp.gmail.com');
     }
 
-    sendEmail(callback){
+    sendEmail(email, callback){
         var mailOptions = {
             from: '"Gustavo Quesada" <quesada.tavo@gmail.com>',
-            to: 'quesada.tavo@gmail.com',
-            subject: 'EzyPay Prueba',
-            html: '<p>Esto es una prueba realizada por <h4>Gustavo Quesada</h4></p>'
+            to: email.email,
+            subject: email.subject,
+            html: email.body
         };
 
         this.transporter.sendMail(mailOptions, function(error, info){
