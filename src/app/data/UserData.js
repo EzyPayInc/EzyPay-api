@@ -38,7 +38,6 @@ export class UserData {
     }
 
     updateUser(req, callback) {
-        console.log("llega aca");
         let user = new User(req.body.idUser, req.body.name, req.body.lastname, req.body.phoneNumber, req.body.email, req.body.password,
             req.body.cardNumber, req.body.cvv, req.body.expirationDate, req.body.uuid, "", true);
         let query = "UPDATE tb_user set ? WHERE idUser = ? ";
@@ -68,6 +67,11 @@ export class UserData {
             }
         });
 
+    }
+
+    validateUserAccount(idUser, callback) {
+        var query = "UPDATE tb_user SET ? where idUser = ?";
+        this.connectionHandler.query(query,[{"isValidatedAccount": 1}, idUser], callback);
     }
 
 }

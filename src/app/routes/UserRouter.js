@@ -7,3 +7,4 @@ var service = new UserService();
 
 USER_ROUTER.route("/create").post(service.insertUser);
 USER_ROUTER.route("/update").put(authController.isAuthenticated, service.updateUser);
+USER_ROUTER.route("/validate/:id").get(service.validateUserAccount);

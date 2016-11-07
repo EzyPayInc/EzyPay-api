@@ -5,7 +5,7 @@ var bcrypt = require("bcrypt-nodejs");
  */
 export class User {
 
-    constructor(idUser, name, lastname, phoneNumber, email, password, avatar, isActive) {
+    constructor(idUser, name, lastname, phoneNumber, email, password, avatar, isActive, isValidatedAccount) {
         this.idUser = idUser;
         this.name = name;
         this.lastname = lastname;
@@ -14,12 +14,13 @@ export class User {
         this.password = password;
         this.avatar = avatar;
         this.isActive = isActive;
+        this.isValidatedAccount = isValidatedAccount;
 
     }
 
     static initWithObject(object) {
         var user = new User(object.idUser, object.name, object.lastname, object.phoneNumber, object.email, object.password,
-            object.avatar, object.isActive);
+            object.avatar, object.isActive, object.isValidatedAccount);
         return user;
     }
 
