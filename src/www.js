@@ -1,15 +1,20 @@
 'use strict';
 var debugModule = require("debug");
 var http = require("http");
-var server = require("./server1");
+var path = require('path');
+global.appRoot = path.resolve(__dirname);
+// Startup app server
+var config = require("./config");
+var server = require("./server");
 // Get port from environment and store in Express.
-const port = normalizePort(process.env.PORT || '3000');
+const port = getNormalizedPort(process.env.PORT);
 server["default"].set('port', port);
 // create server and listen on provided port (on all network interfaces).
 const httpServer = http.createServer(server["default"]);
 httpServer.listen(port);
 //Event listener for HTTP server "listening" event.
 httpServer.on('listening', ()=> {
+	//noinspection SpellCheckingInspection
 	let addr = httpServer.address();
 	let bind = typeof addr === 'string'
 		? 'pipe ' + addr
@@ -18,6 +23,7 @@ httpServer.on('listening', ()=> {
 });
 //Event listener for HTTP server "error" event.
 httpServer.on('error', (error)=> {
+	//noinspection JSUnresolvedVariable
 	if (error.syscall !== 'listen') {
 		throw error;
 	}
@@ -25,6 +31,7 @@ httpServer.on('error', (error)=> {
 		? 'Pipe ' + port
 		: 'Port ' + port;
 	// handle specific listen errors with friendly messages
+	//noinspection SpellCheckingInspection,JSUnresolvedVariable
 	switch (error.code) {
 		case 'EACCES':
 			console.error(bind + ' requires elevated privileges');
@@ -39,7 +46,8 @@ httpServer.on('error', (error)=> {
 	}
 });
 //Normalize a port into a number, string, or false.
-function normalizePort(val) {
+function getNormalizedPort(value) {
+	var val = config.parameters.port || value;
 	let port = parseInt(val, 10);
 	if (isNaN(port)) {
 		// named pipe

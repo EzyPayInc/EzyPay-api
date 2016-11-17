@@ -1,10 +1,10 @@
+var config = require("./config");
 var express = require("express");
-// var passport = require('passport');
 var bodyParser = require("body-parser");
 var session = require('express-session');
-var appRouter = require("./app.router").AppRouter;
-var oauth2Service = require("../base/oauth2.service").Oauth2Service;
-var passportService = require("../base/passport.service").PassportService;
+var appRouter01 = require("./router");
+var oauth2Service = require("./base/oauth2.service").Oauth2Service;
+var passportService = require("./base/passport.service").PassportService;
 
 class Server {
 
@@ -24,18 +24,14 @@ class Server {
 		this.app.use(bodyParser.urlencoded({
 			extended: true
 		}));
-		this.app.use(passportService.config());
+		this.app.use(session(config.session));
+		passportService.config(this.app);
 		oauth2Service.config();
-		this.app.use(session({
-			resave: true,
-			saveUninitialized: true,
-			secret: 'Super Secret Session Key'
-		}));
 	}
 
 	routes() {
 		let router = express.Router();
-		appRouter.config(router);
+		appRouter01.config(router);
 		this.app.use(router);
 	}
 

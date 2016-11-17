@@ -1,10 +1,10 @@
 "use strict";
+const config = require("../config");
 var bcrypt = require('bcrypt-nodejs');
 class CryptoService {
 	static crypt(text) {
 		return new Promise((resolve, reject) => {
-			//TODO: parametrizar la cantidad
-			bcrypt.genSalt(10, (error, salt) => {
+			bcrypt.genSalt(config.parameters.cryptoRounds, (error, salt) => {
 				if (error) {
 					reject(error);
 				}
