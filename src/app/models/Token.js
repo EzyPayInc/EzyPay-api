@@ -2,11 +2,11 @@
 module.exports = (sequelize, DataTypes)=> {
 	var TokenModule = sequelize.define('Token', {
 		userId: {
-			field: 'idUser',
+			field: 'userId',
 			type: DataTypes.INTEGER
 		},
 		clientId: {
-			field: 'idClient',
+			field: 'clientId',
 			type: DataTypes.INTEGER
 		},
 		value: DataTypes.STRING

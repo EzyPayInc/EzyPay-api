@@ -22,20 +22,20 @@ class UserService extends BaseService {
 
 	getAll(criteria) {
 		//noinspection JSUnresolvedFunction
-		return this.Models.Table.findAll({where: criteria});
+		return this.Models.User.findAll({where: criteria});
 	}
 
 	getById(id) {
 		//noinspection JSUnresolvedFunction
-		return this.Models.Table.findById(id);
+		return this.Models.User.findById(id);
 	}
 
 	updateById(id, data) {
-		return this.Models.Table.update(data, {where: {"id": id}});
+		return this.Models.User.update(data, {where: {"id": id}});
 	}
 
 	validateAccount(id) {
-		return this.Models.Table.update({
+		return this.Models.User.update({
 			isValidatedAccount: 1
 		}, {where: {"id": id}});
 	}

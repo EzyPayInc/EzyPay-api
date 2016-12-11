@@ -2,12 +2,12 @@
 module.exports = (sequelize, DataTypes)=> {
 	return sequelize.define('Card', {
 		id: {
-			field: 'idCard',
+			field: 'cardId',
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
 		userId: {
-			field: 'idUser',
+			field: 'userId',
 			type: DataTypes.INTEGER
 		},
 		number: DataTypes.STRING,

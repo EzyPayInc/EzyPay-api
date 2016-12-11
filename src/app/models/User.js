@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes)=> {
 	//noinspection JSUnusedGlobalSymbols
 	return sequelize.define('User', {
 		id: {
-			field: 'idUser',
+			field: 'userId',
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},

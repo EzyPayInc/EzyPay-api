@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes)=> {
 	return sequelize.define('Client', {
 		id: {
-			field: 'idClient',
+			field: 'clientId',
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},

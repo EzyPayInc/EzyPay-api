@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server/www --presets es2016",
-    "start": "node src/server/www"
+    "start": "node src/www"
   },
   "author": "EzyPay Inc.",
   "license": "ISC",

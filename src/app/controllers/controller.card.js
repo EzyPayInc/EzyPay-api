@@ -9,8 +9,11 @@ class CardController {
 	}
 
 	static getAll(req, res) {
+		console.log(req.body);
+		let userId = parseInt(req.body[0].userId);
+		let criteria = {"userId": userId};
 		let _service = new CardService(req, res);
-		c.handleService(res, _service.getAll(req.body));
+		c.handleService(res, _service.getAll(criteria));
 	}
 
 	static getById(req, res) {

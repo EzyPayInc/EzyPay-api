@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes)=> {
 	return sequelize.define('Restaurant', {
 		id: {
-			field: 'idRestaurant',
+			field: 'restaurantId',
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},

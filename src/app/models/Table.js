@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes)=> {
 	return sequelize.define('Table', {
 		id: {
-			field: 'idTable',
+			field: 'tableId',
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
 		restaurantId: {
-			field: 'idRestaurant',
+			field: 'restaurantId',
 			type: DataTypes.INTEGER
 		},
 		tableNumber: {
