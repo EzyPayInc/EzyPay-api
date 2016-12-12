@@ -6,6 +6,10 @@ class CardService extends BaseService.Service {
 		return this.Models.Card.create(data);
 	}
 
+	updateById(id, data) {
+		return this.Models.Card.update(data, {where: {"cardId": id}});
+	}
+
 	getAll(criteria) {
 		//noinspection JSUnresolvedFunction,JSUnresolvedVariable
 		return this.Models.Card.findAll({where: criteria});

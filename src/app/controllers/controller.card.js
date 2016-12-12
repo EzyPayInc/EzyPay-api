@@ -8,6 +8,12 @@ class CardController {
 		c.handleService(res, _service.create(req.body));
 	}
 
+	static updateById(req, res) {
+		let id = parseInt(req.params["id"]);
+		let _service = new CardService(req, res);
+		c.handleService(res, _service.updateById(id, req.body[0]));
+	}
+
 	static getAll(req, res) {
 		console.log(req.body);
 		let userId = parseInt(req.body[0].userId);

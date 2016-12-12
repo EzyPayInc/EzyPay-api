@@ -6,6 +6,8 @@ var router = express.Router();
 //noinspection JSUnresolvedFunction
 router.post("/", CardController.create);
 //noinspection JSUnresolvedFunction
+router.put("/:id", CardController.updateById);
+//noinspection JSUnresolvedFunction
 router.post("/getAll", CardController.getAll);
 //noinspection JSUnresolvedFunction
 router.get("/:id", CardController.getById);
