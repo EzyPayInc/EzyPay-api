@@ -9,4 +9,5 @@ module.exports.use = (router)=> {
 	router.use("/restaurant", policies.BearerAuth, require('./router.restaurant'));
 	router.use("/table", policies.BearerAuth, require('./router.table'));
 	router.use("/user", policies.BearerAuth, require('./router.user'));
+	router.use("/ticket", policies.BearerAuth, require('./router.ticket'));
 };

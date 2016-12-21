@@ -6,5 +6,6 @@ module.exports = {
 	ClientService: require('./service.client'),
 	RestaurantService: require('./service.restaurant'),
 	TableService: require('./service.table'),
-	UserService: require('./service.user')
+	UserService: require('./service.user'),
+	TicketService: require('./service.ticket')
 };

@@ -6,5 +6,6 @@ module.exports = {
 	ClientController: require('./controller.client'),
 	RestaurantController: require('./controller.restaurant'),
 	TableController: require('./controller.table'),
-	UserController: require('./controller.user')
+	UserController: require('./controller.user'),
+	TicketController: require('./controller.ticket'),
 };
