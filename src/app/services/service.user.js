@@ -12,7 +12,7 @@ class UserService extends BaseService {
 			//noinspection JSUnresolvedFunction
 			this.Models.User.create(data).then(
 				(user)=> {
-					emailHandler.sendUserValidation(user);
+					//emailHandler.sendUserValidation(user);
 					resolve(user.id);
 				},
 				(error)=> reject(error)
@@ -38,6 +38,12 @@ class UserService extends BaseService {
 		return this.Models.User.update({
 			isValidatedAccount: 1
 		}, {where: {"id": id}});
+	}
+
+	validatePhoneNumbers(phoneNumbers) {
+        return this.Models.User.findAll({
+        	where: { phoneNumber: {$in: phoneNumbers}}
+        });
 	}
 
 	uploadProfileImage(req, res) {

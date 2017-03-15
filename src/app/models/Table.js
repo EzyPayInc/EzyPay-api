@@ -3,10 +3,12 @@ module.exports = (sequelize, DataTypes)=> {
 		id: {
 			field: 'tableId',
 			primaryKey: true,
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
+            autoIncrement : true
 		},
 		restaurantId: {
 			field: 'restaurantId',
+            validate: {notEmpty: true},
 			type: DataTypes.INTEGER
 		},
 		tableNumber: {

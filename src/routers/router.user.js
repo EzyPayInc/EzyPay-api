@@ -13,5 +13,7 @@ router.get("/:id", UserController.getById);
 router.put('/:id', UserController.updateById);
 //noinspection JSUnresolvedFunction
 router.get('/validate/:id', UserController.validateAccount);
+//noinspection JSUnresolvedFunction
+router.post('/validatePhoneNumbers', UserController.validatePhoneNumbers);
 
 module.exports = router;

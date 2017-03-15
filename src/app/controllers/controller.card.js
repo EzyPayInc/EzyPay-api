@@ -9,15 +9,16 @@ class CardController {
 	}
 
 	static updateById(req, res) {
+        console.log(req.params);
+        console.log(req.body);
 		let id = parseInt(req.params["id"]);
 		let _service = new CardService(req, res);
-		c.handleService(res, _service.updateById(id, req.body[0]));
+		c.handleService(res, _service.updateById(id, req.body));
 	}
 
 	static getAll(req, res) {
-		console.log(req.body);
-		let userId = parseInt(req.body[0].userId);
-		let criteria = {"userId": userId};
+		//let userId = parseInt(req.body[0].userId);
+		let criteria = {"userId": 0};
 		let _service = new CardService(req, res);
 		c.handleService(res, _service.getAll(criteria));
 	}

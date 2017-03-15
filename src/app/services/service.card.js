@@ -12,6 +12,7 @@ class CardService extends BaseService.Service {
 
 	getAll(criteria) {
 		//noinspection JSUnresolvedFunction,JSUnresolvedVariable
+		criteria = {"userId": this.user.id};
 		return this.Models.Card.findAll({where: criteria});
 	}
 

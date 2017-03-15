@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes)=> {
         id: {
             field: 'ticketId',
             primaryKey: true,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            autoIncrement : true
         },
         restaurantId: DataTypes.INTEGER,
         tableId: DataTypes.INTEGER

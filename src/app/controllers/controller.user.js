@@ -31,5 +31,11 @@ class UserController {
 		let _service = new UserService(req, res);
 		c.handleService(res, _service.validateAccount(id));
 	}
+
+    static validatePhoneNumbers(req, res) {
+        let phoneNumbers = req.body["phoneNumbers"];
+        let _service = new UserService(req, res);
+        c.handleService(res, _service.validatePhoneNumbers(phoneNumbers));
+    }
 }
 module.exports = UserController;

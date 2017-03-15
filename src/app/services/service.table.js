@@ -3,6 +3,7 @@ class TableService extends BaseService.Service {
 
 	create(data) {
 		//noinspection JSUnresolvedFunction,JSUnresolvedVariable
+		console.log(data);
 		return this.Models.Table.create(data);
 	}
 

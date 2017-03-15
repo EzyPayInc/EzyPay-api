@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes)=> {
 		id: {
 			field: 'userId',
 			primaryKey: true,
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
+			autoIncrement : true
 		},
 		email: {
 			unique: true,
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes)=> {
 			type: DataTypes.STRING,
 			validate: {notEmpty: true, min: 8}
 		},
+		userType: DataTypes.INTEGER,
 		name: DataTypes.STRING,
 		lastName: DataTypes.STRING,
 		phoneNumber: DataTypes.STRING,
