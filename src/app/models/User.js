@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes)=> {
 		lastName: DataTypes.STRING,
 		phoneNumber: DataTypes.STRING,
 		isActive: DataTypes.BOOLEAN,
-		isValidatedAccount: DataTypes.BOOLEAN
+		isValidatedAccount: DataTypes.BOOLEAN,
+		avatar: DataTypes.STRING
 	}, {
 		timestamps: false,
 		freezeTableName: true,

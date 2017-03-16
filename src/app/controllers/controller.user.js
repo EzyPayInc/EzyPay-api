@@ -37,5 +37,10 @@ class UserController {
         let _service = new UserService(req, res);
         c.handleService(res, _service.validatePhoneNumbers(phoneNumbers));
     }
+
+    static uploadUserImage(req, res) {
+        let _service = new UserService(req, res);
+        c.handleService(res, _service.uploadUserImage());
+	}
 }
 module.exports = UserController;

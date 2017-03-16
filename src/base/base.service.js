@@ -1,6 +1,7 @@
 "use strict";
 const config = require('../config');
 let formidable = require('formidable');
+var path = require('path');
 const ModelLoader = require("./model.loader.js");
 class Service {
 
@@ -16,7 +17,7 @@ class Service {
 	//noinspection JSUnusedGlobalSymbols
 	upload(multiple) {
 		var form = new formidable.IncomingForm();
-		form.uploadDir = config.parameters.uploadFolder;
+		form.uploadDir = path.join(__dirname, '../../uploads');;
 		form.multiples = multiple;
 		let arrayFiles = [];
 		return new Promise((resolve, reject) => {

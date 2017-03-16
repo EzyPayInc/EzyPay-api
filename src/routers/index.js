@@ -8,7 +8,7 @@ module.exports.use = (router)=> {
 	router.use("/client", policies.BearerAuth, require('./router.client'));
 	router.use("/restaurant", policies.BearerAuth, require('./router.restaurant'));
 	router.use("/table", policies.BearerAuth, require('./router.table'));
-    router.use("/user", require('./router.user'));
-    //router.use("/user", policies.BearerAuth, require('./router.user'));
+    //router.use("/user", require('./router.user'));
+    router.use("/user", policies.BearerAuth, require('./router.user'));
 	router.use("/ticket", policies.BearerAuth, require('./router.ticket'));
 };

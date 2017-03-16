@@ -1,8 +1,9 @@
 const BaseService = require("../../base/base.service").Service;
-var fs = require('fs');
 var path = require('path');
-var formidable = require('formidable');
 var EmailHandler = require("../util/Email/EmailHandler").EmailHandler;
+var fs = require('fs');
+var formidable = require('formidable');
+
 
 class UserService extends BaseService {
 
@@ -46,22 +47,23 @@ class UserService extends BaseService {
         });
 	}
 
-	uploadProfileImage(req, res) {
-		var form = new formidable.IncomingForm();
-		form.multiples = true;
-		form.uploadDir = path.join(__dirname, '/uploads');
-		form.on('file', function (field, file) {
-			fs.rename(file.path, path.join(form.uploadDir, file.name));
-		});
-		form.on('error', function (err) {
-			var response = {"error": err.message};
-			res.status(500).json(response);
-		});
-		form.on('end', function () {
-			var response = {"response": "success"};
-			res.status(200).json(response);
-		});
-		form.parse(req);
+	updateUserImage(id, filename) {
+		return this.Models.User.update({
+			avatar : filename
+		}, {where: {"id": id}});
 	}
+
+
+
+   uploadUserImage() {
+        return new Promise((resolve, reject)=> {
+            this.upload(true).then((data)=> {
+				var filename = "upload_" + data[0].path.split("_")[1];
+				this.updateUserImage(this.user.id, filename).then((result) => {
+					resolve(filename);
+				}, (error)=> reject(error));
+            }, (error)=> reject(error));
+        });
+    } //end uploadFile
 }
 module.exports = UserService;
