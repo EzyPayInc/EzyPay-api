@@ -42,5 +42,11 @@ class UserController {
         let _service = new UserService(req, res);
         c.handleService(res, _service.uploadUserImage());
 	}
+
+    static downloadUserImage(req, res) {
+        let id = parseInt(req.params["id"]);
+        let _service = new UserService(req, res);
+        c.handleFileService(res, _service.getUserProfileImage(id));
+    }
 }
 module.exports = UserController;

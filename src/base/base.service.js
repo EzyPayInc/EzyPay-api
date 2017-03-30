@@ -2,6 +2,7 @@
 const config = require('../config');
 let formidable = require('formidable');
 var path = require('path');
+var fs = require('fs');
 const ModelLoader = require("./model.loader.js");
 class Service {
 
@@ -32,6 +33,16 @@ class Service {
 			});
 			form.parse(this.req);
 		});
+	}
+
+	getFile(filename) {
+		var fullFilename = path.join(__dirname, ('../../uploads/' + filename));
+        if (!fs.existsSync(fullFilename)) {
+           return null;
+        }
+        var file = fs.readFileSync(fullFilename);
+        return file;
+
 	}
 }
 exports.Service = Service;

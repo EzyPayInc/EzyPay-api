@@ -1,21 +1,23 @@
 var express = require("express");
 // var authenticated = require("../config/policies/authenticated");
 var UserController = require("../app/controllers").UserController;
+var policies = require("../policies");
 
 var router = express.Router();
 //noinspection JSUnresolvedFunction
 router.post("/", UserController.create);
 //noinspection JSUnresolvedFunction
-router.post("/getAll", UserController.getAll);
+router.post("/getAll", policies.BearerAuth, UserController.getAll);
 //noinspection JSUnresolvedFunction
-router.get("/:id", UserController.getById);
+router.get("/:id", policies.BearerAuth, UserController.getById);
 //noinspection JSUnresolvedFunction
-router.put('/:id', UserController.updateById);
+router.put('/:id', policies.BearerAuth, UserController.updateById);
 //noinspection JSUnresolvedFunction
-router.get('/validate/:id', UserController.validateAccount);
+router.get('/validate/:id', policies.BearerAuth, UserController.validateAccount);
 //noinspection JSUnresolvedFunction
-router.post('/validatePhoneNumbers', UserController.validatePhoneNumbers);
+router.post('/validatePhoneNumbers', policies.BearerAuth, UserController.validatePhoneNumbers);
 //noinspection JSUnresolvedFunction
-router.post('/uploadImage/:id', UserController.uploadUserImage);
+router.post('/uploadImage/:id', policies.BearerAuth, UserController.uploadUserImage);
+router.get('/downloadImage/:id', UserController.downloadUserImage);
 
 module.exports = router;

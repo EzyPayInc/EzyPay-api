@@ -54,16 +54,34 @@ class UserService extends BaseService {
 	}
 
 
-
    uploadUserImage() {
         return new Promise((resolve, reject)=> {
             this.upload(true).then((data)=> {
 				var filename = "upload_" + data[0].path.split("_")[1];
 				this.updateUserImage(this.user.id, filename).then((result) => {
-					resolve(filename);
+					resolve(result);
 				}, (error)=> reject(error));
             }, (error)=> reject(error));
         });
     } //end uploadFile
+
+	getUserProfileImage(id)
+	{
+        return new Promise((resolve, reject) => {
+            this.getById(id).then(
+                (user)=> {
+                	var file = this.getFile(user.avatar);
+                	if(file == null) {
+                		reject("Not found");
+					} else {
+                        resolve(file);
+					}
+                },
+                (error)=> {
+                	reject(error);
+                }
+            );
+        });
+	}
 }
 module.exports = UserService;
