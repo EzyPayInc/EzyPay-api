@@ -53,7 +53,6 @@ class UserService extends BaseService {
 		}, {where: {"id": id}});
 	}
 
-
    uploadUserImage() {
         return new Promise((resolve, reject)=> {
             this.upload(true).then((data)=> {
@@ -63,7 +62,7 @@ class UserService extends BaseService {
 				}, (error)=> reject(error));
             }, (error)=> reject(error));
         });
-    } //end uploadFile
+    }
 
 	getUserProfileImage(id)
 	{

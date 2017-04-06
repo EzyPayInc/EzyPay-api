@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes)=> {
 		email: {
 			unique: true,
 			type: DataTypes.STRING,
-			validate: {notEmpty: true, isEmail: true}
+			validate: {notEmpty: true}
 		},
 		password: {
 			type: DataTypes.STRING,
@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes)=> {
 		phoneNumber: DataTypes.STRING,
 		isActive: DataTypes.BOOLEAN,
 		isValidatedAccount: DataTypes.BOOLEAN,
-		avatar: DataTypes.STRING
+		avatar: DataTypes.STRING,
+		boss: DataTypes.INTEGER
 	}, {
 		timestamps: false,
 		freezeTableName: true,
@@ -34,12 +35,7 @@ module.exports = (sequelize, DataTypes)=> {
 				CryptoService.crypt(user.password).then((hashedPassword)=> {
 						user.createdAt = new Date();
 						user.password = hashedPassword;
-						// sequenceService.getNextSequence("tb_user").then(
-						// 	(result:any)=> {
-						// 		user.id = result.id;
 						next(null, user);
-						// 	}, (error)=>next(error)
-						// );
 					}, (error)=>next(error)
 				);
 			},
