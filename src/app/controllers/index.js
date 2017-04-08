@@ -8,5 +8,6 @@ module.exports = {
 	TableController: require('./controller.table'),
 	UserController: require('./controller.user'),
 	TicketController: require('./controller.ticket'),
-	PaymentController: require('./controller.payment')
+    PaymentController: require('./controller.payment'),
+    CurrencyController: require('./controller.currency'),
 };

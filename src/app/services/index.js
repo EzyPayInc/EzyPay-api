@@ -8,5 +8,6 @@ module.exports = {
 	TableService: require('./service.table'),
 	UserService: require('./service.user'),
 	TicketService: require('./service.ticket'),
-	PaymentService: require('./service.payment')
+    PaymentService: require('./service.payment'),
+    CurrencyService: require('./service.currency')
 };
