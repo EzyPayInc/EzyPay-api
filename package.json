@@ -22,6 +22,7 @@
     "formidable": "^1.0.17",
     "method-override": "^2.3.6",
     "mysql": "^2.11.1",
+    "node-pushnotifications": "^1.0.18",
     "nodemailer": "^2.6.4",
     "nodemon": "^1.11.0",
     "oauth2orize": "^1.5.1",

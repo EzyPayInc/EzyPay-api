@@ -18,7 +18,7 @@ class Service {
 	//noinspection JSUnusedGlobalSymbols
 	upload(multiple) {
 		var form = new formidable.IncomingForm();
-		form.uploadDir = path.join(__dirname, '../../uploads');;
+		form.uploadDir = path.join(__dirname, '../../uploads');
 		form.multiples = multiple;
 		let arrayFiles = [];
 		return new Promise((resolve, reject) => {

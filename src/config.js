@@ -33,5 +33,11 @@ module.exports = {
 		allowOrigin: undefined,
 		allowMethods: "GET,POST,PUT,HEAD,DELETE,OPTIONS",
 		allowHeaders: "Origin, X-Requested-With, Content-Type, Accept"
+	},
+	pushNotifications: {
+		apn : {
+            cert: "../certificates/certDevelopment.pem",
+            key: "certificates/keyDevelopment.pem",
+		}
 	}
 };

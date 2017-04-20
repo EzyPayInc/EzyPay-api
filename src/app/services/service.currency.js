@@ -1,6 +1,4 @@
-/**
- * Created by gustavoquesada on 4/7/17.
- */
+"use strict";
 const BaseService = require("../../base/base.service");
 class CurrencyService extends BaseService.Service {
 

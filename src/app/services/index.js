@@ -9,5 +9,6 @@ module.exports = {
 	UserService: require('./service.user'),
 	TicketService: require('./service.ticket'),
     PaymentService: require('./service.payment'),
-    CurrencyService: require('./service.currency')
+    CurrencyService: require('./service.currency'),
+    PushNotificationsService: require('./service.pushnotifications'),
 };
