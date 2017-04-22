@@ -1,3 +1,4 @@
+"use strict";
 const BaseService = require("../../base/base.service");
 class ClientService extends BaseService.Service {
 

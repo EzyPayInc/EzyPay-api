@@ -3,9 +3,10 @@ let c = require("../../base/base.controller");
 const PushNotificationsService = require("../services").PushNotificationsService;
 
 class PushNotificationsController {
-    static sendNotification(req, res) {
+
+    static callWaiterNotification(req, res) {
         let _service = new PushNotificationsService(req, res);
-        _service.sendNotification();
+        c.handleService(res, _service.callWaiterNotification(req.body.tableNumber, req.body.commerceId));
     }
 }
 module.exports = PushNotificationsController;

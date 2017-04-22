@@ -11,4 +11,5 @@ module.exports = {
     PaymentService: require('./service.payment'),
     CurrencyService: require('./service.currency'),
     PushNotificationsService: require('./service.pushnotifications'),
+    DeviceTokenService: require('./service.devicetoken')
 };

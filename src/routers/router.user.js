@@ -1,7 +1,6 @@
 var express = require("express");
 // var authenticated = require("../config/policies/authenticated");
 var UserController = require("../app/controllers").UserController;
-var PushNotificationsController = require("../app/controllers").PushNotificationsController;
 var policies = require("../policies");
 
 var router = express.Router();
@@ -20,6 +19,5 @@ router.post('/validatePhoneNumbers', policies.BearerAuth, UserController.validat
 //noinspection JSUnresolvedFunction
 router.post('/uploadImage/:id', policies.BearerAuth, UserController.uploadUserImage);
 router.get('/downloadImage/:id', UserController.downloadUserImage);
-router.post('/pushNotification/', PushNotificationsController.sendNotification);
 
 module.exports = router;

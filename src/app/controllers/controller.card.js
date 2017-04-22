@@ -9,7 +9,6 @@ class CardController {
 	}
 
 	static updateById(req, res) {
-        console.log(req.params);
         console.log(req.body);
 		let id = parseInt(req.params["id"]);
 		let _service = new CardService(req, res);
