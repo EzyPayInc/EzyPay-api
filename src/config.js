@@ -44,6 +44,8 @@ module.exports = {
     pushNotificationsCategories: {
         callWaiter: "1",
         requestBill: "2",
-        sendBill:  "3"
+        sendBill:  "3",
+        splitRequest: "4",
+        splitResponse: "5"
     }
 };

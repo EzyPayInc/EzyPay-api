@@ -11,5 +11,6 @@ module.exports = {
     PaymentController: require('./controller.payment'),
     CurrencyController: require('./controller.currency'),
     PushNotificationsController: require('./controller.pushnotifications'),
-    DeviceTokenController: require('./controller.devicetoken')
+    DeviceTokenController: require('./controller.devicetoken'),
+    UserPaymentController: require('./controller.userpayment')
 };

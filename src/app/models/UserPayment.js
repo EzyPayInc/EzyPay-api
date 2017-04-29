@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes)=> {
             primaryKey: true,
             type: DataTypes.INTEGER
         },
-        cost: DataTypes.FLOAT
+        cost: DataTypes.FLOAT,
+        state: DataTypes.INTEGER
     }, {
         timestamps: false,
         freezeTableName: true,

@@ -8,4 +8,6 @@ router.post('/callWaiter', PushNotificationsController.callWaiterNotification);
 router.post('/billRequest', PushNotificationsController.billRequestNotification);
 //noinspection JSUnresolvedFunction
 router.post('/sendBill', PushNotificationsController.sendBillNotification);
+//noinspection JSUnresolvedFunction
+router.post('/splitRequest', PushNotificationsController.splitRequestNotification);
 module.exports = router;

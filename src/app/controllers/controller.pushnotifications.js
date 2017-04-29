@@ -18,5 +18,10 @@ class PushNotificationsController {
         let _service = new PushNotificationsService(req, res);
         c.handleService(res, _service.sendBillNotification(req.body.clientId, req.body.amount, req.body.currencyCode));
     }
+
+    static splitRequestNotification(req, res) {
+        let _service = new PushNotificationsService(req, res);
+        c.handleService(res, _service.splitRequestNotification(req.body.data.payment, req.body.data.friends));
+    }
 }
 module.exports = PushNotificationsController;
