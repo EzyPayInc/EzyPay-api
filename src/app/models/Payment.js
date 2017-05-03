@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes)=> {
             type: DataTypes.INTEGER
         },
         userId: DataTypes.INTEGER,
+        employeeId: DataTypes.INTEGER,
         cost: DataTypes.FLOAT,
         paymentDate: DataTypes.DATE,
         tableNumber: DataTypes.INTEGER,

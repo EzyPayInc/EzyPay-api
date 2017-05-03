@@ -5,7 +5,7 @@ const DeviceTokenService = require("../services").DeviceTokenService;
 class DeviceTokenController {
     static create(req, res) {
         let _service = new DeviceTokenService(req, res);
-        c.handleService(res, _service.create(req.body));
+        c.handleService(res, _service.insert(req.body));
     }
 
     static updateById(req, res) {
@@ -15,16 +15,25 @@ class DeviceTokenController {
     }
 
     static getAll(req, res) {
-        let userId = parseInt(req.body[0].userId);
-        let criteria = {"userId":  userId};
         let _service = new DeviceTokenService(req, res);
-        c.handleService(res, _service.getAll(criteria));
+        c.handleService(res, _service.getAll(req.body));
     }
 
     static getById(req, res) {
         let id = parseInt(req.params["id"]);
         let _service = new DeviceTokenService(req, res);
         c.handleService(res, _service.getById(id));
+    }
+
+    static destroy(req, res) {
+        let id = parseInt(req.params["id"]);
+        let _service = new DeviceTokenService(req, res);
+        c.handleService(res, _service.destroy(id));
+    }
+
+    static destroyAll(req, res) {
+        let _service = new DeviceTokenService(req, res);
+        c.handleService(res, _service.destroyAll(req.body));
     }
 }
 module.exports = DeviceTokenController;

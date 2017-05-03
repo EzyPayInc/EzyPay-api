@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes)=> {
             type: DataTypes.INTEGER
         },
         deviceToken: DataTypes.STRING,
-        devicePlatform: DataTypes.STRING
+        devicePlatform: DataTypes.STRING,
+        deviceId: DataTypes.STRING
     }, {
         timestamps: false,
         freezeTableName: true,
