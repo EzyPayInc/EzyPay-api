@@ -11,7 +11,7 @@ module.exports.use = (router)=> {
     router.use("/user", require('./router.user'));
     //router.use("/user", policies.BearerAuth, require('./router.user'));
 	router.use("/ticket", policies.BearerAuth, require('./router.ticket'));
-    router.use("/payment", policies.BearerAuth, require('./router.payment'));
+    router.use("/payment", /*policies.BearerAuth,*/ require('./router.payment'));
     router.use("/currency", policies.BearerAuth, require('./router.currency'));
     router.use("/deviceToken", policies.BearerAuth, require('./router.devicetoken'));
     router.use("/notifications", policies.BearerAuth, require('./router.pushnotifications'));

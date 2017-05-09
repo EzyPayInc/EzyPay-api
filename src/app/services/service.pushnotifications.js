@@ -6,7 +6,7 @@ const pushCategories = require('../../config').pushNotificationsCategories;
 var util = require('util');
 class PushNotificationsService extends BaseService.Service {
 
-    callWaiterNotification(tableNumber, commerceId)
+    callWaiterNotification(tableNumber, commerceId, paymentId)
     {
         return new Promise((resolve, reject) => {
             let _service = new DeviceTokenService(this.req, this.res);
@@ -17,34 +17,7 @@ class PushNotificationsService extends BaseService.Service {
                     let body = util.format(this.localizedStrings.callWaiterNotificationBody,
                         this.user.name, this.user.lastName, tableNumber);
                     let category = pushCategories.callWaiter;
-                    let notification = this.createNotification(title, body, category, null);
-                    this.sendNotification(this.getDeviceTokens(result), notification)
-                        .then((results) => {
-                            resolve(results);
-                        })
-                        .catch((err) => {
-                            reject(err);
-                        });
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
-        });
-    }
-
-    billRequestNotification(tableNumber, commerceId)
-    {
-        return new Promise((resolve, reject) => {
-            let _service = new DeviceTokenService(this.req, this.res);
-            let commerceCriteria = {"userID": commerceId};
-            _service.getAll(commerceCriteria).then(
-                (result) => {
-                    let title = this.localizedStrings.billRequestNotificationTitle;
-                    let body = util.format(this.localizedStrings.billRequestNotificationBody,
-                        this.user.name, this.user.lastName, tableNumber);
-                    let category = pushCategories.requestBill;
-                    let custom = {tableNumber : tableNumber, clientId : this.user.id};
+                    let custom = {paymentId : paymentId};
                     let notification = this.createNotification(title, body, category, custom);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
@@ -61,7 +34,35 @@ class PushNotificationsService extends BaseService.Service {
         });
     }
 
-    sendBillNotification(userId, amount, currencyCode) {
+    billRequestNotification(tableNumber, commerceId, paymentId)
+    {
+        return new Promise((resolve, reject) => {
+            let _service = new DeviceTokenService(this.req, this.res);
+            let commerceCriteria = {"userID": commerceId};
+            _service.getAll(commerceCriteria).then(
+                (result) => {
+                    let title = this.localizedStrings.billRequestNotificationTitle;
+                    let body = util.format(this.localizedStrings.billRequestNotificationBody,
+                        this.user.name, this.user.lastName, tableNumber);
+                    let category = pushCategories.requestBill;
+                    let custom = { paymentId:paymentId };
+                    let notification = this.createNotification(title, body, category, custom);
+                    this.sendNotification(this.getDeviceTokens(result), notification)
+                        .then((results) => {
+                            resolve(results);
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        });
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    sendBillNotification(userId, amount, currencyCode, paymentId) {
         return new Promise((resolve, reject) => {
             let _service = new DeviceTokenService(this.req, this.res);
             let userCriteria = {"userId": userId};
@@ -71,7 +72,7 @@ class PushNotificationsService extends BaseService.Service {
                     let body = util.format(this.localizedStrings.sendBillRequestNotificationBody,
                         currencyCode, amount);
                     let category = pushCategories.sendBill;
-                    let custom = {amount : amount, currencyCode : currencyCode};
+                    let custom = { paymentId : paymentId };
                     let notification = this.createNotification(title, body, category, custom);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {

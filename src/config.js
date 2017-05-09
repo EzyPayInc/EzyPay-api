@@ -35,6 +35,22 @@ module.exports = {
         allowMethods: "GET,POST,PUT,HEAD,DELETE,OPTIONS",
         allowHeaders: "Origin, X-Requested-With, Content-Type, Accept"
     },
+    paymentConfig: {
+        userConfig: {
+            username:'jcappa101',
+            publicKey:'77996421',
+            privateKey:'J3tcrfhPmCOmCBq3YDPvYwwZtSlZdqmf'
+        },
+        type: 'auth',
+        serviceConfig: {
+            hostname: 'paycom.credomatic.com',
+            port: 443,
+            path: '/PayComBackEndWeb/common/requestPaycomService.go',
+            method: 'POST',
+            Content_Type: 'application/x-www-form-urlencoded'
+        }
+
+    },
     pushNotifications: {
         apn: {
             cert: path.join(__dirname, "/certificates/cert.pem"),

@@ -11,5 +11,10 @@ router.put("/:id", PaymentenController.updateById);
 router.post("/getAll", PaymentenController.getAll);
 //noinspection JSUnresolvedFunction
 router.get("/:id", PaymentenController.getById);
+//noinspection JSUnresolvedFunction
+router.get("/activePayment/:id", PaymentenController.getPaymentActiveByUser);
+//noinspection JSUnresolvedFunction
+router.post("/test/:id", PaymentenController.testPayment);
+
 
 module.exports = router;

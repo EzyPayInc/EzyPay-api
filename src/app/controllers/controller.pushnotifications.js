@@ -6,17 +6,17 @@ class PushNotificationsController {
 
     static callWaiterNotification(req, res) {
         let _service = new PushNotificationsService(req, res);
-        c.handleService(res, _service.callWaiterNotification(req.body.tableNumber, req.body.commerceId));
+        c.handleService(res, _service.callWaiterNotification(req.body.tableNumber, req.body.commerceId, req.body.paymentId));
     }
 
     static billRequestNotification(req, res) {
         let _service = new PushNotificationsService(req, res);
-        c.handleService(res, _service.billRequestNotification(req.body.tableNumber, req.body.commerceId));
+        c.handleService(res, _service.billRequestNotification(req.body.tableNumber, req.body.commerceId, req.body.paymentId));
     }
 
     static sendBillNotification(req, res) {
         let _service = new PushNotificationsService(req, res);
-        c.handleService(res, _service.sendBillNotification(req.body.clientId, req.body.amount, req.body.currencyCode));
+        c.handleService(res, _service.sendBillNotification(req.body.clientId, req.body.amount, req.body.currencyCode, req.body.paymentId));
     }
 
     static splitRequestNotification(req, res) {

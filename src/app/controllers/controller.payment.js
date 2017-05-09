@@ -26,5 +26,16 @@ class PaymentController {
         let _service = new PaymentService(req, res);
         c.handleService(res, _service.getById(id));
     }
+
+    static getPaymentActiveByUser(req, res) {
+        let id = parseInt(req.params["id"]);
+        let _service = new PaymentService(req, res);
+        c.handleService(res, _service.getPaymentActiveByUser(id));
+    }
+
+    static testPayment(req, res) {
+        let _service = new PaymentService(req, res);
+        c.handleService(res, _service.testPayment());
+    }
 }
 module.exports = PaymentController;
