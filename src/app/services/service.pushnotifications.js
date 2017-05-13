@@ -92,10 +92,10 @@ class PushNotificationsService extends BaseService.Service {
     splitRequestNotification(payment, friends) {
         let title = this.localizedStrings.splitRequestNotificationTitle;
         let category = pushCategories.splitRequest;
-        let custom = {paymentId : payment.paymentId, userId: this.user.id};
         return new Promise((resolve, reject) => {
             for (var i = 0; i < friends.length; i++) {
                 let userCriteria = {"userId": friends[i].id};
+                let custom = {paymentId : payment.paymentId, userId: this.user.id, friendId: friends[i].id};
                 this.createSplitRequestNotification(title, category, custom, userCriteria, payment, friends[i].cost);
             }
             resolve({success:1});
@@ -114,7 +114,7 @@ class PushNotificationsService extends BaseService.Service {
         );
     }
 
-    responseSplitRequestNotification(userId, response, friendId) {
+    responseSplitRequestNotification(userId, paymentId, response) {
         return new Promise((resolve, reject) => {
             let _service = new DeviceTokenService(this.req, this.res);
             let userCriteria = {"userId": userId};
@@ -125,7 +125,7 @@ class PushNotificationsService extends BaseService.Service {
                         this.localizedStrings.negativeSplitResponseNotificationBody;
                     let body = util.format(bodyResponse,this.user.name, this.user.lastName);
                     let category = pushCategories.splitResponse;
-                    let custom = {friendId : friendId, response : response};
+                    let custom = {paymentId: paymentId};
                     let notification = this.createNotification(title, body, category, custom);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
