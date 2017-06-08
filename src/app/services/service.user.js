@@ -8,13 +8,18 @@ var formidable = require('formidable');
 class UserService extends BaseService {
 
 	create(data) {
-		var emailHandler = new EmailHandler();
 		return new Promise((resolve, reject) => {
 			//noinspection JSUnresolvedFunction
 			this.Models.User.create(data).then(
 				(user)=> {
-					//emailHandler.sendUserValidation(user);
-					resolve(user.id);
+					if(data.tablesQuantity <= 0) {
+                        resolve(user.id);
+					} else {
+						 this.insertTables(user.id, data.tablesQuantity).then(
+							 (result)=> resolve(user.id),
+							 (error)=> reject(error)
+						 );
+					}
 				},
 				(error)=> reject(error)
 			);
@@ -81,6 +86,10 @@ class UserService extends BaseService {
                 }
             );
         });
+	}
+
+	insertTables(commerceId, tablesQuantity) {
+        return this.DBs[0].query('CALL sp_insertTables('+commerceId+', '+tablesQuantity+');');
 	}
 }
 module.exports = UserService;
