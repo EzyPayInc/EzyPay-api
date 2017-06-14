@@ -19,6 +19,12 @@ class TableController {
 		c.handleService(res, _service.getById(id));
 	}
 
+	static getByRestaurant(req, res) {
+        let id = parseInt(req.params["id"]);
+        let _service = new TableService(req, res);
+        c.handleService(res, _service.getByRestaurant(id));
+	}
+
 	static updateById(req, res) {
 		let id = parseInt(req.params["id"]);
 		let _service = new TableService(req, res);
