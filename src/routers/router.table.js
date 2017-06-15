@@ -10,7 +10,7 @@ router.post("/getAll", TableController.getAll);
 //noinspection JSUnresolvedFunction
 router.get("/:id", TableController.getById);
 //noinspection JSUnresolvedFunction
-router.get("/restaurant/:id", TableController.getById);
+router.get("/restaurant/:id", TableController.getByRestaurant);
 //noinspection JSUnresolvedFunction
 router.put('/:id', TableController.updateById);
 

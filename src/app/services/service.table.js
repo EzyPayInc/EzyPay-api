@@ -12,7 +12,7 @@ class TableService extends BaseService.Service {
 	}
 
 	getByRestaurant(restaurantId) {
-        this.DBs[0].query('CALL sp_getPaymentActive('+restaurantId+');')
+        return this.DBs[0].query('CALL sp_getTablesByCommerce('+restaurantId+');');
 	}
 
 	getById(id) {
