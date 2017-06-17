@@ -41,3 +41,6 @@ dist
 
 #webstorm config files
 .idea
+
+#Exclude upload folder
+uploads
