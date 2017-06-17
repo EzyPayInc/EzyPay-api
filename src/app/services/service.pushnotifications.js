@@ -17,7 +17,7 @@ class PushNotificationsService extends BaseService.Service {
                     let body = util.format(this.localizedStrings.callWaiterNotificationBody,
                         this.user.name, this.user.lastName, tableNumber);
                     let category = pushCategories.callWaiter;
-                    let custom = {paymentId : paymentId};
+                    let custom = {"paymentId" : paymentId};
                     let notification = this.createNotification(title, body, category, custom);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {

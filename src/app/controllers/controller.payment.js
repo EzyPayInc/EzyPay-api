@@ -27,6 +27,12 @@ class PaymentController {
         c.handleService(res, _service.getById(id));
     }
 
+    static destroyById(req, res) {
+        let id = parseInt(req.params["id"]);
+        let _service = new PaymentService(req, res);
+        c.handleService(res, _service.destroyById(id));
+    }
+
     static getPaymentActiveByUser(req, res) {
         let id = parseInt(req.params["id"]);
         let _service = new PaymentService(req, res);

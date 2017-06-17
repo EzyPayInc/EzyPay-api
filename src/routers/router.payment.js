@@ -12,6 +12,8 @@ router.post("/getAll", PaymentenController.getAll);
 //noinspection JSUnresolvedFunction
 router.get("/:id", PaymentenController.getById);
 //noinspection JSUnresolvedFunction
+router.delete("/:id", PaymentenController.destroyById);
+//noinspection JSUnresolvedFunction
 router.get("/activePayment/:id", PaymentenController.getPaymentActiveByUser);
 //noinspection JSUnresolvedFunction
 router.post("/test/:id", PaymentenController.testPayment);

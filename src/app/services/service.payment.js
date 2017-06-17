@@ -23,6 +23,11 @@ class PaymentService extends BaseService.Service {
         return this.Models.Payment.update(data, {where: {"id": id}});
     }
 
+    destroyById(id) {
+        //noinspection JSUnresolvedFunction,JSUnresolvedVariable
+        return this.Models.Payment.destroy({where: {"paymentId": id}});
+    }
+
     getPaymentActiveByUser(id) {
         return new Promise((resolve, reject) => {
             this.DBs[0].query('CALL sp_getPaymentActive('+id+');').then(

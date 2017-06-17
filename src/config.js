@@ -10,10 +10,10 @@ module.exports = {
     dataSources: [{
         port: 3306,
         dialect: 'mysql',
-        database: 'ezypay_new',
-        host: '172.16.122.12',
-        username: 'ezypay01',
-        password: 'EzyPay123#',
+        database: 'main',
+        host: '104.198.26.242',
+        username: 'root',
+        password: 'R*6xVFwxpR763#WM7H',
         pool: {
             min: 0,
             max: 5,
