@@ -21,7 +21,7 @@ module.exports = {
         }
     }],
     parameters: {
-        port: "3000",
+        port: "8080",
         cryptoRounds: 10,
         uploadFolder: "temporal",
         modelsFolder: "/app/models",
