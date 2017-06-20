@@ -7,13 +7,26 @@ module.exports = {
         saveUninitialized: true,
         secret: 'f134ec88b47384b00060e72c06cd2012'
     },
-    dataSources: [{
+    /*dataSources: [{
         port: 3306,
         dialect: 'mysql',
         database: 'main',
         host: '104.198.26.242',
         username: 'root',
         password: 'R*6xVFwxpR763#WM7H',
+        pool: {
+            min: 0,
+            max: 5,
+            idle: 10000
+        }
+    }],*/
+    dataSources: [{
+        port: 3306,
+        dialect: 'mysql',
+        database: 'ezypay_new',
+        host: '172.16.122.12',
+        username: 'ezypay01',
+        password: 'EzyPay123#',
         pool: {
             min: 0,
             max: 5,
