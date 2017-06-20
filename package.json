@@ -1,14 +1,21 @@
 {
   "name": "ezypay-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "ugwo API",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server/www --presets es2016",
-    "start": "node src/www"
+    "start": "node ."
   },
   "author": "EzyPay Inc.",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EzyPayInc/EzyPay-api.git"
+  },
+  "engines": {
+    "node": ">=6.10.3"
+  },
   "dependencies": {
     "aws-sdk": "^2.6.1",
     "babel-cli": "^6.16.0",
