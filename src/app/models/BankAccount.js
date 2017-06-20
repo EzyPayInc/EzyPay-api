@@ -1,7 +1,7 @@
 "use strict";
 module.exports = (sequelize, DataTypes)=> {
     return sequelize.define('BankAccount', {
-        id: {
+        userId: {
             field: 'userId',
             primaryKey: true,
             type: DataTypes.INTEGER
