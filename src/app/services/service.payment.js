@@ -33,7 +33,7 @@ class PaymentService extends BaseService.Service {
             this.DBs[0].query('CALL sp_getPaymentActive('+id+');').then(
                 (result)=> {
                     if(result.length > 0) {
-                        resolve(JSON.parse(result[0].Payment));
+                        resolve(result[0].Payment);
                     } else {
                         resolve(result);
                     }
