@@ -27,20 +27,29 @@ class ModelLoader {
 	setupModels() {
 		var dbs = this._dbs;
 		var models = this._models;
-		config.dataSources.forEach((conn, index)=> {
-			var modelsFolder = config.parameters.modelsFolder;
-			var dir = path.join(global.appRoot, modelsFolder, conn["name"] || "");
-			var sequelize = new Sequelize(conn["database"],
-				conn["username"], conn["password"], conn);
-			fs.readdirSync(dir).filter((file)=> {
-				return path.extname(file) == ".js";
-			}).forEach((file)=> {
-				var c = path.join(dir, file);
-				var model = sequelize.import(c);
-				models[model.name] = model;
-			});
-			dbs[conn["name"] || index] = sequelize;
+		let c_name = process.env.INSTANCE_CONNECTION_NAME;
+		if (process.env.NODE_ENV === 'production' && c_name) {
+			if (config.dataSource.dialect === 'mysql') {
+				config.dataSource.dialectOptions = {
+					socketPath: `/cloudsql/${c_name}`
+				}
+			}
+		}
+		var modelsFolder = config.parameters.modelsFolder;
+		var dir = path.join(global.appRoot, modelsFolder);
+		var sequelize = new Sequelize(
+			config.dataSource.database,
+			config.dataSource.username,
+			config.dataSource.password,
+			config.dataSource);
+		fs.readdirSync(dir).filter((file) => {
+			return path.extname(file) == ".js";
+		}).forEach((file) => {
+			var c = path.join(dir, file);
+			var model = sequelize.import(c);
+			models[model.name] = model;
 		});
+		dbs[0] = sequelize;
 	}
 }
 module.exports = ModelLoader;

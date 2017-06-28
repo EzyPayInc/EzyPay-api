@@ -7,10 +7,9 @@ module.exports = {
         saveUninitialized: true,
         secret: 'f134ec88b47384b00060e72c06cd2012'
     },
-    dataSources: [{
-        port: 3306,
+    dataSource: {
         dialect: 'mysql',
-        database: 'main',
+        database: 'ugwo_main',
         username: 'root',
         password: 'R*6xVFwxpR763#WM7H',
         pool: {
@@ -18,7 +17,7 @@ module.exports = {
             max: 5,
             idle: 10000
         }
-    }],
+    },
     parameters: {
         port: "8080",
         cryptoRounds: 10,
@@ -36,9 +35,9 @@ module.exports = {
     },
     paymentConfig: {
         userConfig: {
-            username:'jcappa101',
-            publicKey:'77996421',
-            privateKey:'J3tcrfhPmCOmCBq3YDPvYwwZtSlZdqmf'
+            username: 'jcappa101',
+            publicKey: '77996421',
+            privateKey: 'J3tcrfhPmCOmCBq3YDPvYwwZtSlZdqmf'
         },
         type: 'auth',
         serviceConfig: {
@@ -59,7 +58,7 @@ module.exports = {
     pushNotificationsCategories: {
         callWaiter: "1",
         requestBill: "2",
-        sendBill:  "3",
+        sendBill: "3",
         splitRequest: "4",
         splitResponse: "5"
     }
