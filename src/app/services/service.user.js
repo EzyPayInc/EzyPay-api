@@ -2,8 +2,6 @@ const BaseService = require("../../base/base.service").Service;
 var path = require('path');
 var EmailHandler = require("../util/Email/EmailHandler").EmailHandler;
 var fs = require('fs');
-var formidable = require('formidable');
-
 
 class UserService extends BaseService {
 
