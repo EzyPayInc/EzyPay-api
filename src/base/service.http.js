@@ -1,7 +1,6 @@
 "use strict";
-const BaseService = require("../../base/base.service");
 var https = require('https');
-class HttpService extends BaseService.Service {
+class HttpService {
 
     postRequest(postData, postOptions) {
         return new Promise((resolve, reject) => {
