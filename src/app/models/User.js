@@ -30,24 +30,30 @@ module.exports = (sequelize, DataTypes) => {
 			freezeTableName: true,
 			tableName: "tb_user",
 			hooks: {
-				beforeCreate: (user, options, next) => {
-					CryptoService.crypt(user.password).then((hashedPassword) => {
-						user.createdAt = new Date();
-						user.password = hashedPassword;
-						next(null, user);
-					}, (error) => next(error)
-					);
-				},
-				beforeUpdate: (user, options, next) => {
-					if (user.password) {
+				beforeCreate: (user, options) => {
+					return new Promise((resolve, reject) => {
 						CryptoService.crypt(user.password).then((hashedPassword) => {
+							user.createdAt = new Date();
 							user.password = hashedPassword;
-							next(null, user);
-						}, (error) => next(error)
-						);
-					} else {
-						next(null, user);
-					}
+							resolve(user);
+						}, (error) => {
+							reject(error);
+						});
+					});
+				},
+				beforeUpdate: (user, options) => {
+					return new Promise((resolve, reject) => {
+						if (user.password) {
+							CryptoService.crypt(user.password).then((hashedPassword) => {
+								user.password = hashedPassword;
+								resolve(user);
+							}, (error) => {
+								reject(error);
+							});
+						} else {
+							resolve(user);
+						}
+					});
 				}
 			}
 		});

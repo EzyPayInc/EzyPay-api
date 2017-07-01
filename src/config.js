@@ -52,7 +52,8 @@ module.exports = {
     pushNotifications: {
         apn: {
             cert: path.join(__dirname, "/certificates/cert.pem"),
-            key: path.join(__dirname, "/certificates/key.pem")
+            key: path.join(__dirname, "/certificates/key.pem"),
+            production: false
         }
     },
     pushNotificationsCategories: {

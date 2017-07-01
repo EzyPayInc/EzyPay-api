@@ -1,6 +1,5 @@
 "use strict";
 const BaseService = require("../../base/base.service");
-const CredomaticPaymentGateway = require("./service.credomaticpaymentgateway");
 class PaymentService extends BaseService.Service {
 
     create(data) {
@@ -44,16 +43,6 @@ class PaymentService extends BaseService.Service {
                 }
             );
         });
-    }
-
-    testPayment() {
-        var card = {
-            number : '5431111111111111',
-            expirationDate : '1220',
-            cvv : '123'
-        };
-        var paymentGateway = new CredomaticPaymentGateway(this.req, this. res);
-        return paymentGateway.transaction(card, 100);
     }
 }
 module.exports = PaymentService;
