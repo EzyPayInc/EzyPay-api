@@ -1,4 +1,4 @@
-//noinspection SpellCheckingInspection
+var multer = require('multer');
 var path = require('path');
 module.exports = {
     session: {
@@ -21,8 +21,13 @@ module.exports = {
     parameters: {
         port: "8080",
         cryptoRounds: 10,
-        uploadFolder: "temporal",
         modelsFolder: "/app/models",
+        cloud_project: "ugwo-platform",
+        cloud_bucket: "ugwo-contact-pictures",
+        cloud_file_url: (file) => {
+            let bucket = 'ugwo-contact-pictures';
+            return `https://storage.googleapis.com/${bucket}/${file}`;
+        },
         uidChars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },
     http: {
@@ -33,6 +38,12 @@ module.exports = {
         allowMethods: "GET,POST,PUT,HEAD,DELETE,OPTIONS",
         allowHeaders: "Origin, X-Requested-With, Content-Type, Accept"
     },
+    multer: multer({
+        storage: multer.MemoryStorage,
+        limits: {
+            fileSize: 5 * 1024 * 1024 // no larger than 5mb
+        }
+    }),
     paymentConfig: {
         userConfig: {
             username: 'jcappa101',

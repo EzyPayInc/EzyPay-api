@@ -1,5 +1,7 @@
 "use strict";
 var CryptoService = require("../../base/crypto.service").CryptoService;
+const config = require('../../config');
+
 module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define('User', {
 		id: {
@@ -61,12 +63,16 @@ module.exports = (sequelize, DataTypes) => {
 	User.prototype.toJSON = function () {
 		var values = this.get();
 		delete values.password;
+		if (values.avatar) {
+			values.avatar = config.parameters.
+				cloud_file_url(values.avatar);
+		}
 		return values;
 	};
 
 	User.prototype.verifyPassword = function (password) {
 		return CryptoService.compare(password, this.password);
 	};
-	
+
 	return User;
 };
