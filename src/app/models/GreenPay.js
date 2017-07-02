@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes)=> {
 		accessToken: DataTypes.STRING,
 		refreshToken: DataTypes.STRING,
 		expiresIn: DataTypes.INTEGER,
-        createdAt: DataTypes.DATETIME
+        createdAt: DataTypes.DATE
 	}, {
 		timestamps: false,
 		freezeTableName: true,
