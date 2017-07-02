@@ -33,21 +33,24 @@ module.exports = {
         allowMethods: "GET,POST,PUT,HEAD,DELETE,OPTIONS",
         allowHeaders: "Origin, X-Requested-With, Content-Type, Accept"
     },
-    paymentConfig: {
-        userConfig: {
-            username: 'jcappa101',
-            publicKey: '77996421',
-            privateKey: 'J3tcrfhPmCOmCBq3YDPvYwwZtSlZdqmf'
+    httpMethods : {
+        GET : "GET",
+        POST : "POST",
+        PUT : "PUT",
+        DELETE : "DELETE"
+    },
+    greenPayConfig: {
+        login : {
+            username: "easypay",
+            password: "easypay7"
         },
-        type: 'auth',
-        serviceConfig: {
-            hostname: 'paycom.credomatic.com',
-            port: 443,
-            path: '/PayComBackEndWeb/common/requestPaycomService.go',
-            method: 'POST',
-            Content_Type: 'application/x-www-form-urlencoded'
+        hostname:'sandbox.greenpay.me',
+        port:443,
+        paths : {
+            login : "/login",
+            customers : "/customers",
+            creditCards: "/customers/%d/creditCards"
         }
-
     },
     pushNotifications: {
         apn: {
