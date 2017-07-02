@@ -2,9 +2,14 @@
 var https = require('https');
 class HttpService {
 
-    postRequest(postData, postOptions) {
+    constructor(options) {
+        this.options = options;
+    }
+
+    postRequest(postData) {
         return new Promise((resolve, reject) => {
-            const postReq = https.request(postOptions, (res) => {
+            
+            const postReq = https.request(this.options, (res) => {
                 res.on('data', (d) => {
                     process.stdout.write(d);
                     resolve(d.toString('utf8'));
