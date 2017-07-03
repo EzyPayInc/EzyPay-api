@@ -1,21 +1,29 @@
-const BaseService = require("../../base/base.service").Service;
 var EmailHandler = require("../util/Email/EmailHandler").EmailHandler;
+const BaseService = require("../../base/base.service").Service;
+const GreenPayService = require("./service.greenpay");
 
 class UserService extends BaseService {
 
 	create(data) {
+		var greenPayService = new GreenPayService(this.req, this.res);
 		return new Promise((resolve, reject) => {
 			//noinspection JSUnresolvedFunction
-			this.Models.User.create(data).then(
-				(user) => {
-					if (data.tablesQuantity <= 0) {
-						resolve(user.id);
-					} else {
-						this.insertTables(user.id, data.tablesQuantity).then(
-							(result) => resolve(user.id),
-							(error) => reject(error)
-						);
-					}
+			greenPayService.createCustomer(data).then(
+				(customerId) => {
+					data.customerId = customerId;
+					this.Models.User.create(data).then(
+						(user) => {
+							if (data.tablesQuantity <= 0) {
+								resolve(user.id);
+							} else {
+								this.insertTables(user.id, data.tablesQuantity).then(
+									(result) => resolve(user.id),
+									(error) => reject(error)
+								);
+							}
+						},
+						(error) => reject(error)
+					);
 				},
 				(error) => reject(error)
 			);

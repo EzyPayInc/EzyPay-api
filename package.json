@@ -23,6 +23,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "md5": "^2.2.1",
+    "moment": "^2.18.1",
     "multer": "^1.3.0",
     "mysql2": "^1.3.5",
     "node-pushnotifications": "^1.0.18",

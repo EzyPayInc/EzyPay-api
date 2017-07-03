@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
 		isActive: DataTypes.BOOLEAN,
 		isValidatedAccount: DataTypes.BOOLEAN,
 		avatar: DataTypes.STRING,
-		boss: DataTypes.INTEGER
+		boss: DataTypes.INTEGER,
+		customerId: DataTypes.INTEGER
 	}, {
 			timestamps: false,
 			freezeTableName: true,

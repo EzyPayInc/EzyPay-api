@@ -51,8 +51,7 @@ module.exports = {
         DELETE : 'DELETE'
     },
     greenPayConfig: {
-        hostname: 'sandbox.greenpay.me',
-        port: 443,
+        hostname: 'https://sandbox.greenpay.me',
         login : {
             username: 'easypay',
             password: 'easypay7'
