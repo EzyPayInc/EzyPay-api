@@ -1,27 +1,18 @@
 "use strict";
-var https = require('https');
+var request = require('request');
 class HttpService {
 
-    constructor(options) {
-        this.options = options;
-    }
-
-    postRequest(postData) {
+    postRequest(options) {
         return new Promise((resolve, reject) => {
-            
-            const postReq = https.request(this.options, (res) => {
-                res.on('data', (d) => {
-                    process.stdout.write(d);
-                    resolve(d.toString('utf8'));
-                });
+            request(options, function (error, response, body){
+                if(!error && (response.statusCode >= 200 && response.statusCode <= 204)) {
+                    resolve(body);
+                } else{
+                    var errorToSend = error == null ? body : error;
+                    reject(errorToSend);
+                }
             });
-            postReq.on('error', (e) => {
-                reject(e)
-            });
-            postReq.write(postData);
-            postReq.end();
         });
     }
 }
 module.exports = HttpService;
-

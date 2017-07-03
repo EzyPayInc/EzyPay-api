@@ -1,10 +1,22 @@
 "use strict";
 const BaseService = require("../../base/base.service");
+const GreenPayService = require("./service.greenpay");
 class CardService extends BaseService.Service {
 
 	create(data) {
 		//noinspection JSUnresolvedFunction,JSUnresolvedVariable
-		return this.Models.Card.create(data);
+		var greenPayService = new GreenPayService(this.req, this.res);
+		return new Promise((resolve, reject)=> {
+			greenPayService.createCard(data).then(
+				(card) => {
+					this.Models.Card.create(data).then(
+						(result) => resolve(result),
+						(error) => reject(error)
+					)
+				},
+				(error) => reject(error)
+			)
+		});
 	}
 
 	updateById(id, data) {

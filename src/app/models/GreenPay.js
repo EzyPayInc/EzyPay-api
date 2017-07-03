@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes)=> {
 		},
 		accessToken: DataTypes.STRING,
 		refreshToken: DataTypes.STRING,
+		tokenType : DataTypes.STRING,
 		expiresIn: DataTypes.INTEGER,
         createdAt: DataTypes.DATE
 	}, {
