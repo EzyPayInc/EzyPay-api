@@ -5,6 +5,7 @@ const config = require("../../config");
 const moment = require("moment");
 const util = require('util');
 class GreenPayService extends BaseService.Service {
+    
     login() {
 		var options = {
             url : config.greenPayConfig.hostname + config.greenPayConfig.paths.login,
