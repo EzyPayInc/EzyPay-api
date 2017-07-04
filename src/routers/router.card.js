@@ -11,5 +11,7 @@ router.put("/:id", CardController.updateById);
 router.post("/getAll", CardController.getAll);
 //noinspection JSUnresolvedFunction
 router.get("/:id", CardController.getById);
+//noinspection JSUnresolvedFunction
+router.delete("/:id/customer/:customer", CardController.destroy);
 
 module.exports = router;

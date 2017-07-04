@@ -27,5 +27,12 @@ class CardController {
 		let _service = new CardService(req, res);
 		c.handleService(res, _service.getById(id));
 	}
+
+	static destroy(req, res) {
+		let id = parseInt(req.params["id"]);
+		let customer = parseInt(req.params["customer"]);
+		let _service = new CardService(req, res);
+		c.handleService(res, _service.destroy(id, customer));
+	}
 }
 module.exports = CardController;

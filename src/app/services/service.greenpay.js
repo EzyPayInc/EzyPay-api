@@ -14,7 +14,7 @@ class GreenPayService extends BaseService.Service {
         };
         return new Promise((resolve, reject) => {
             var httpService = new HttpService();
-			httpService.postRequest(options).then(
+			httpService.request(options).then(
 				(response)=> {
                     var greenPayData = {
                         id : 1,
@@ -80,21 +80,16 @@ class GreenPayService extends BaseService.Service {
             body : customer,
             headers : {}
         };
-        return new Promise((resolve, reject)=> {
-            this.sendRequest(options).then(
-                (response) => resolve(response.id),
-                (error) => reject(error)
-            )
-        });
+        return this.sendRequest(options);
     }
 
     createCard(data) {
         var path = util.format(config.greenPayConfig.paths.creditCards, data.customerId);
         var card = {
             cardHolderName: data.cardHolderName,
-            cardNumber: data.number,
+            cardNumber: data.cardNumber,
             cardVendor: 1,
-            ccv: data.cvv,
+            ccv: data.ccv,
             expirationDate: data.expirationDate,
             favorite: true,
             nickname: "string"
@@ -103,18 +98,49 @@ class GreenPayService extends BaseService.Service {
             url: config.greenPayConfig.hostname + path,
             method: config.httpMethods.POST,
             json : true,
+            body : card,
+            headers : {}
+        };
+        return this.sendRequest(options);
+    }
+
+    updateCard(data) {
+        var path = util.format(config.greenPayConfig.paths.creditCards, data.customerId) + data.serverId;
+        var card = {
+            ccv: data.ccv,
+            expirationDate: data.expirationDate,
+            favorite: true,
+            nickname: "string"
+        };
+        var options = {
+            url: config.greenPayConfig.hostname + path,
+            method: config.httpMethods.PUT,
+            json : true,
+            body : card,
+            headers : {}
+        };
+        return this.sendRequest(options);
+    }
+
+    deleteCard(customerId, cardId) {
+        var path = util.format(config.greenPayConfig.paths.creditCards, customerId) + cardId;
+        var options = {
+            url: config.greenPayConfig.hostname + path,
+            method: config.httpMethods.DELETE,
+            headers : {}
+        };
+        return this.sendRequest(options);
+    }
+
+    transaction(data) {
+        var options = {
+            url: config.greenPayConfig.hostname + config.greenPayConfig.paths.transactions,
+            method: config.httpMethods.POST,
+            json : true,
             body : customer,
             headers : {}
         };
-        return new Promise((resolve, reject)=> {
-            this.sendRequest(options).then(
-                (response) => {
-                    console.log(response);
-                    resolve(response.id);
-                },
-                (error) => reject(error)
-            )
-        });
+        return this.sendRequest(options)
     }
 
     sendRequest(options) {
@@ -123,7 +149,7 @@ class GreenPayService extends BaseService.Service {
                 (token) => {
                     options.headers.Authorization = "Bearer " + token;
                     var httpService = new HttpService();
-                    httpService.postRequest(options).then(
+                    httpService.request(options).then(
                         (response) => resolve(response),
                         (error) => reject(error)
                     );
@@ -134,9 +160,10 @@ class GreenPayService extends BaseService.Service {
     }
 
     isTokenExpired(seconds, date) {
-        var newDate = moment(date).add((seconds - 60), 's');
-        var currentDate = new Date();
-        return newDate >= currentDate;
+        var newDate = moment(date);
+        var currentDate = moment();
+        var secondsDiff = currentDate.diff(newDate, 'seconds')
+        return secondsDiff >= (seconds - 60);
     }
 }
 

@@ -9,8 +9,8 @@ class UserService extends BaseService {
 		return new Promise((resolve, reject) => {
 			//noinspection JSUnresolvedFunction
 			greenPayService.createCustomer(data).then(
-				(customerId) => {
-					data.customerId = customerId;
+				(response) => {
+					data.customerId = response.id;
 					this.Models.User.create(data).then(
 						(user) => {
 							if (data.tablesQuantity <= 0) {

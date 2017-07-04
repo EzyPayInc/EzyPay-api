@@ -59,7 +59,8 @@ module.exports = {
         paths : {
             login : '/login',
             customers : '/customers',
-            creditCards: '/customers/%d/creditCards'
+            creditCards: '/customers/%d/creditCards/',
+            transactions: '/transactions'
         }
     },
     pushNotifications: {

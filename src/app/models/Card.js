@@ -4,16 +4,18 @@ module.exports = (sequelize, DataTypes)=> {
 		id: {
 			field: 'cardId',
 			primaryKey: true,
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
+			autoIncrement : true
 		},
 		userId: {
 			field: 'userId',
 			type: DataTypes.INTEGER
 		},
-		number: DataTypes.STRING,
-		cvv: DataTypes.STRING,
-		month: DataTypes.STRING,
-		year: DataTypes.STRING
+		cardNumber: DataTypes.STRING,
+		ccv: DataTypes.INTEGER,
+		expirationDate: DataTypes.STRING,
+		serverId: DataTypes.INTEGER,
+		token : DataTypes.STRING
 	}, {
 		timestamps: false,
 		freezeTableName: true,
