@@ -14,10 +14,10 @@ class UserService extends BaseService {
 					this.Models.User.create(data).then(
 						(user) => {
 							if (data.tablesQuantity <= 0) {
-								resolve(user.id);
+								resolve(user);
 							} else {
 								this.insertTables(user.id, data.tablesQuantity).then(
-									(result) => resolve(user.id),
+									(result) => resolve(user),
 									(error) => reject(error)
 								);
 							}
