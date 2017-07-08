@@ -65,9 +65,14 @@ module.exports = {
     },
     pushNotifications: {
         apn: {
-            cert: path.join(__dirname, "/certificates/cert.pem"),
+            token: {
+                key: path.join(__dirname, "/certificates/key.p8"),
+                keyId: '9P35VFNHTB',
+                teamId: 'NEY65554FF',
+            },
+            /*cert: path.join(__dirname, "/certificates/cert.pem"),
             key: path.join(__dirname, "/certificates/key.pem"),
-            production: false
+            production: false*/
         }
     },
     pushNotificationsCategories: {

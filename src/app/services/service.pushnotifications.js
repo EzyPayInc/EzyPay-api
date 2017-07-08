@@ -144,6 +144,7 @@ class PushNotificationsService extends BaseService.Service {
 
     createNotification(title, body, category, custom) {
         var data = {
+            topic:'net.ezypay.EzyPay',
             title: title,
             body: body,
             priority: 'high',
