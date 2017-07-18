@@ -6,15 +6,9 @@ module.exports = (sequelize, DataTypes)=> {
             primaryKey: true,
             type: DataTypes.INTEGER
         },
-        username: DataTypes.STRING,
-        accountNumber: {
-            field: 'account_number',
-            type: DataTypes.STRING
-        },
-        userIdentification: {
-            field: 'user_identification',
-            type: DataTypes.STRING
-        },
+        userAccount: DataTypes.STRING,
+        accountNumber: DataTypes.STRING,
+        userIdentification:DataTypes.STRING,
         bank: DataTypes.STRING
     }, {
         timestamps: false,

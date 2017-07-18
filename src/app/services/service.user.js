@@ -63,15 +63,28 @@ class UserService extends BaseService {
 	}
 
 	validatePhoneNumbers(phoneNumbers) {
+		var criteria = {
+			phoneNumber: { $in: phoneNumbers },
+			$and: {
+				phoneNumber: { $not: this.user.phoneNumber }
+			},
+			userType:1
+		};
 		return this.Models.User.findAll({
-			where: { phoneNumber: { $in: phoneNumbers } }
+			where: criteria
 		});
 	}
 
 	uploadUserImage() {
-		return this.Models.User.update({
-			avatar: this.req.file.csObject
-		}, { where: { "id": this.user.id } });
+		return new Promise((resolve, reject) => {
+			this.Models.User.update(
+				{ avatar: this.req.file.csObject }, 
+				{ where: { "id": this.user.id } }).then(
+					(result) => resolve(this.user),
+					(error) => reject(error)
+				)
+		});
+		
 	}
 
 	insertTables(commerceId, tablesQuantity) {
