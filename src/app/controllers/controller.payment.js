@@ -39,9 +39,9 @@ class PaymentController {
         c.handleService(res, _service.getPaymentActiveByUser(id));
     }
 
-    static testPayment(req, res) {
+    static performPayment(req, res) {
         let _service = new PaymentService(req, res);
-        c.handleService(res, _service.testPayment());
+        c.handleService(res, _service.performPayment(req.body));
     }
 }
 module.exports = PaymentController;

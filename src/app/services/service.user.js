@@ -94,5 +94,15 @@ class UserService extends BaseService {
 		return this.DBs[0].query('CALL sp_insertTables('
 			+ commerceId + ', ' + tablesQuantity + ');');
 	}
+
+	userHistory(userId) {
+		return this.DBs[0].query('CALL sp_getUserHistory('
+			+ userId + ');');
+	}
+	
+	userHistoryDates(userId) {
+		return this.DBs[0].query('CALL sp_userHistoryDates('
+			+ userId + ');');
+	}
 }
 module.exports = UserService;
