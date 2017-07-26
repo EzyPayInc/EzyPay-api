@@ -6,9 +6,8 @@ class UserService extends BaseService {
 
 	create(data) {
 		var greenPayService = new GreenPayService(this.req, this.res);
-		if(data.userType == 1) {
+		if (data.userType == 1) {
 			return new Promise((resolve, reject) => {
-				//noinspection JSUnresolvedFunction
 				greenPayService.createCustomer(data).then(
 					(response) => {
 						data.customerId = response.id;
@@ -28,14 +27,19 @@ class UserService extends BaseService {
 		return new Promise((resolve, reject) => {
 			this.Models.User.create(data).then(
 				(user) => {
-					if (data.tablesQuantity <= 0) {
-						resolve(user);
-					} else {
-						this.insertTables(user.id, data.tablesQuantity).then(
-							(result) => resolve(user),
-							(error) => reject(error)
-						);
+					if (data.tablesQuantity && data.tablesQuantity > 0) {
+						this.insertTables(user.id, data.tablesQuantity);
+						// .then(
+						// (result) => resolve(user),
+						// (error) => reject(error)
+						// );
 					}
+					if (data.credentials) {
+						data.credentials.userId = user.id;
+						data.credentials.platform = data.credentials.platform.toLowerCase();
+						this.Models.UserCredential.create(data.credentials);
+					}
+					resolve(user);
 				},
 				(error) => reject(error)
 			);
@@ -43,12 +47,10 @@ class UserService extends BaseService {
 	}
 
 	getAll(criteria) {
-		//noinspection JSUnresolvedFunction
 		return this.Models.User.findAll({ where: criteria });
 	}
 
 	getById(id) {
-		//noinspection JSUnresolvedFunction
 		return this.Models.User.findById(id);
 	}
 
@@ -68,7 +70,7 @@ class UserService extends BaseService {
 			$and: {
 				phoneNumber: { $not: this.user.phoneNumber }
 			},
-			userType:1
+			userType: 1
 		};
 		return this.Models.User.findAll({
 			where: criteria
@@ -77,14 +79,15 @@ class UserService extends BaseService {
 
 	uploadUserImage() {
 		return new Promise((resolve, reject) => {
-			this.Models.User.update(
-				{ avatar: this.req.file.csObject }, 
-				{ where: { "id": this.user.id } }).then(
-					(result) => resolve(this.user),
-					(error) => reject(error)
-				)
+			this.Models.User.update({
+				avatar: this.req.file.csObject
+			}, {
+					where: { "id": this.user.id }
+				}).then(
+				(result) => resolve(this.user),
+				(error) => reject(error)
+				);
 		});
-		
 	}
 
 	insertTables(commerceId, tablesQuantity) {

@@ -8,15 +8,19 @@ var modelLoader = require("./model.loader.js");
 class Oauth2Service {
 	static config() {
 		var Models = modelLoader.getInstance()._models;
-		//noinspection JSCheckFunctionSignatures
 		oauth2Server.exchange(oauth2orize.exchange.password(
-			(client, username, password, scope, callback)=> {
-				//noinspection JSUnresolvedFunction,JSUnresolvedVariable
-				Models.User.findOne({where: {email: username}}).then((user)=> {
+			(client, username, password, scope, callback) => {
+				Models.User.findOne({ where: { email: username } }).then((user) => {
 					if (!user) {
 						callback(null, false);
 					} else {
-						user.verifyPassword(password).then((isEqual)=> {
+
+						if (scope && scope.find('facebook')) {
+							console.log('encontrado');
+						}
+
+
+						user.verifyPassword(password).then((isEqual) => {
 							if (!isEqual) {
 								callback(null, false);
 							} else {
@@ -25,13 +29,12 @@ class Oauth2Service {
 									clientId: client.id,
 									value: this.buildUid(64)
 								};
-								//noinspection JSUnresolvedFunction,JSUnresolvedVariable
 								Models.Token.create(token).then(
-									()=> callback(null, token),
-									(error)=> callback(error)
+									() => callback(null, token),
+									(error) => callback(error)
 								);
 							}
-						}, (error)=> callback(error));
+						}, (error) => callback(error));
 					}
 				});
 			})
@@ -40,7 +43,6 @@ class Oauth2Service {
 
 	static buildUid(len) {
 		var buffer = [];
-		//noinspection SpellCheckingInspection
 		var chars = config.parameters.uidChars;
 		for (var i = 0; i < len; ++i) {
 			var min = 0;
