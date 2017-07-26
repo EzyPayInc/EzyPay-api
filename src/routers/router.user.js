@@ -27,5 +27,11 @@ router.post('/uploadImage/:id',
     config.multer.single('image'),
     GCloudStorage.sendUploadToGCS,
     UserController.uploadUserImage);
+router.get('/history/:id',
+    policies.BearerAuth,
+    UserController.userHistory);
+router.get('/history/dates/:id',
+    policies.BearerAuth,
+    UserController.userHistoryDates);
 
 module.exports = router;

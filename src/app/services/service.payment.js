@@ -1,5 +1,6 @@
 "use strict";
 const BaseService = require("../../base/base.service");
+const UserPaymentService = require("./service.payment");
 class PaymentService extends BaseService.Service {
 
     create(data) {
@@ -42,6 +43,18 @@ class PaymentService extends BaseService.Service {
                     reject(error);
                 }
             );
+        });
+    }
+
+    performPayment(payment) {
+        return new Promise((resolve,reject) => {
+            var data = {
+                isCanceled : 1
+            };
+            this.updateById(payment.id, data).then(
+                (result) => resolve(result),
+                (error) => resolve(error)
+            )
         });
     }
 }
