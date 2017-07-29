@@ -34,5 +34,11 @@ router.get('/history/:id',
 router.get('/history/dates/:id',
     policies.BearerAuth,
     UserController.userHistoryDates);
+router.get('/commerce/history/:id',
+    policies.BearerAuth,
+    UserController.commerceHistory);
+router.get('/commerce/history/dates/:id',
+    policies.BearerAuth,
+    UserController.commerceHistoryDates);
 
 module.exports = router;

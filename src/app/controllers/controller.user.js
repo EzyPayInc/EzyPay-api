@@ -54,5 +54,17 @@ class UserController {
 		let _service = new UserService(req, res);
 		c.handleService(res, _service.userHistoryDates(id));
 	}
+
+	static commerceHistory(req, res) {
+		let id = parseInt(req.params["id"]);
+		let _service = new UserService(req, res);
+		c.handleService(res, _service.commerceHistory(id));
+	}
+
+	static commerceHistoryDates(req, res) {
+		let id = parseInt(req.params["id"]);
+		let _service = new UserService(req, res);
+		c.handleService(res, _service.commerceHistoryDates(id));
+	}
 }
 module.exports = UserController;

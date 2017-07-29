@@ -1,6 +1,7 @@
 var EmailHandler = require("../util/Email/EmailHandler").EmailHandler;
 const BaseService = require("../../base/base.service").Service;
 const GreenPayService = require("./service.greenpay");
+const config = require('../../config');
 
 class UserService extends BaseService {
 
@@ -84,7 +85,10 @@ class UserService extends BaseService {
 			}, {
 					where: { "id": this.user.id }
 				}).then(
-				(result) => resolve(this.user),
+				(result) => {
+					this.user.avatar = config.parameters.cloud_file_url(this.req.file.csObject);
+					resolve(this.user)
+				},
 				(error) => reject(error)
 				);
 		});
@@ -103,6 +107,16 @@ class UserService extends BaseService {
 	userHistoryDates(userId) {
 		return this.DBs[0].query('CALL sp_userHistoryDates('
 			+ userId + ');');
+	}
+
+	commerceHistory(commerceId) {
+		return this.DBs[0].query('CALL sp_getCommerceHistory('
+			+ commerceId + ');');
+	}
+	
+	commerceHistoryDates(commerceId) {
+		return this.DBs[0].query('CALL sp_commerceHistoryDates('
+			+ commerceId + ');');
 	}
 }
 module.exports = UserService;
