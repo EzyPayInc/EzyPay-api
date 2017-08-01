@@ -1,6 +1,7 @@
 "use strict";
 const BaseService = require("../../base/base.service");
 const UserPaymentService = require("./service.payment");
+const GreenPayService = require("./service.greenpay");
 class PaymentService extends BaseService.Service {
 
     create(data) {
@@ -47,6 +48,33 @@ class PaymentService extends BaseService.Service {
     }
 
     performPayment(payment) {
+        var greenPayService = new GreenPayService(this.req, this.res);
+        var promisesArray = [];
+        return new Promise((resolve, reject) => {
+            this.DBs[0].query('CALL sp_getFavoriteCards('+payment.id+');').then(
+                (result) => {
+                    for(var i = 0; i < result.length; i++) {
+                        var promise = greenPayService.transaction(result[i]);
+                        promisesArray.push(promise);
+                    }
+                    Promise.all(promisesArray).then(
+                        (results) => { 
+                            this.updatePayment(payment).then(
+                                (resultUpdate) => resolve(resultUpdate),
+                                (error) => reject(error)
+                            )
+                        },
+                        (error) =>  reject(error)
+                    )
+                },
+                (error) => reject(error)
+            )
+        });
+        
+
+    }
+    
+    updatePayment(payment) {
         return new Promise((resolve,reject) => {
             var data = {
                 isCanceled : 1

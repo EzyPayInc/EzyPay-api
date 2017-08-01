@@ -66,5 +66,10 @@ class UserController {
 		let _service = new UserService(req, res);
 		c.handleService(res, _service.commerceHistoryDates(id));
 	}
+
+	static updatePassword(req, res) {
+		let _service = new UserService(req, res);
+		c.handleService(res, _service.updatePassword(req.body));
+	}
 }
 module.exports = UserController;

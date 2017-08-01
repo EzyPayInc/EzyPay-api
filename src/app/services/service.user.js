@@ -118,5 +118,25 @@ class UserService extends BaseService {
 		return this.DBs[0].query('CALL sp_commerceHistoryDates('
 			+ commerceId + ');');
 	}
+
+	updatePassword(data) {
+		return new Promise((resolve, reject) => {
+			var criteria = {email : data.email};
+			return this.getAll(criteria).then(
+				(result) => {
+					if(result.length > 0) {
+						var user = {
+							password = data.newPassword
+						}
+						this.updateById(user, result.id).then(
+							(result) => resolve(result),
+							(error) => reject(error)
+						)
+					}
+				},
+				(error) => reject(error)
+			)
+		})
+	}
 }
 module.exports = UserService;

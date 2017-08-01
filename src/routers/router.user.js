@@ -40,5 +40,8 @@ router.get('/commerce/history/:id',
 router.get('/commerce/history/dates/:id',
     policies.BearerAuth,
     UserController.commerceHistoryDates);
+router.post('/password',
+    policies.BearerAuth,
+    UserController.updatePassword);
 
 module.exports = router;

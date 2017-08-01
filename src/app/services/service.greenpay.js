@@ -134,11 +134,18 @@ class GreenPayService extends BaseService.Service {
     }
 
     transaction(data) {
+        var transaction = {
+            amount: data.amount,
+            authorizationCode: 0,
+            channel: 1,
+            creditCard: data.token,
+            description: "string"
+        }
         var options = {
             url: config.greenPayConfig.hostname + config.greenPayConfig.paths.transactions,
             method: config.httpMethods.POST,
             json : true,
-            body : customer,
+            body : transaction,
             headers : {}
         };
         return this.sendRequest(options)
