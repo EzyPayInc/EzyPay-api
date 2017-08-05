@@ -126,7 +126,7 @@ class UserService extends BaseService {
 				(result) => {
 					if(result.length > 0) {
 						var user = {
-							password = data.newPassword
+							password : data.newPassword
 						}
 						this.updateById(user, result.id).then(
 							(result) => resolve(result),
