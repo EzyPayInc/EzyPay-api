@@ -1,15 +1,26 @@
 var express = require("express");
-// var authenticated = require("../config/policies/authenticated");
-var RestaurantController = require("../app/controllers").RestaurantController;
+let c = require("../base/base.controller");
+var RestaurantService = require("../app/services").RestaurantService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", RestaurantController.create);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", RestaurantController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", RestaurantController.getById);
-//noinspection JSUnresolvedFunction
-router.put('/:id', RestaurantController.updateById);
+
+router.post("/", (req, res) => {
+    let _service = new RestaurantService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.post("/getAll", (req, res) => {
+    let _service = new RestaurantService(req, res);
+    c.handleService(res, _service.getAll(req.body));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new RestaurantService(req, res);
+    c.handleService(res, _service.getById(id));
+});
+router.put('/:id', (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new RestaurantService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
+});
 
 module.exports = router;

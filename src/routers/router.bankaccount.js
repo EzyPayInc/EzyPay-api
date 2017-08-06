@@ -1,14 +1,26 @@
 var express = require("express");
-var BankAccountController = require("../app/controllers").BankAccountController;
+let c = require("../base/base.controller");
+var BankAccountService = require("../app/services").BankAccountService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", BankAccountController.create);
-//noinspection JSUnresolvedFunction
-router.put("/:id", BankAccountController.updateById);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", BankAccountController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", BankAccountController.getById);
+
+router.post("/", (req, res) => {
+    let _service = new BankAccountService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.put("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new BankAccountService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
+});
+router.post("/getAll", (req, res) => {
+    let _service = new BankAccountService(req, res);
+    c.handleService(res, _service.getAll(req.body));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new BankAccountService(req, res);
+    c.handleService(res, _service.getById(id));
+});
 
 module.exports = router;

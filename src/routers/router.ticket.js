@@ -1,11 +1,12 @@
-/**
- * Created by Gustavo Quesada S on 18/12/2016.
- */
 var express = require("express");
-var TicketController = require("../app/controllers").TicketController;
+let c = require("../base/base.controller");
+var TicketService = require("../app/services").TicketService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", TicketController.create);
+
+router.post("/", (req, res) => {
+    let _service = new TicketService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
 
 module.exports = router;

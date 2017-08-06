@@ -1,22 +1,43 @@
 
 var express = require("express");
-var PaymentenController = require("../app/controllers").PaymentController;
+let c = require("../base/base.controller");
+var PaymentService = require("../app/services").PaymentService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", PaymentenController.create);
-//noinspection JSUnresolvedFunction
-router.put("/:id", PaymentenController.updateById);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", PaymentenController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", PaymentenController.getById);
-//noinspection JSUnresolvedFunction
-router.delete("/:id", PaymentenController.destroyById);
-//noinspection JSUnresolvedFunction
-router.get("/activePayment/:id", PaymentenController.getPaymentActiveByUser);
-//noinspection JSUnresolvedFunction
-router.post("/pay", PaymentenController.performPayment);
 
+router.post("/", (req, res) => {
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.put("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
+});
+router.post("/getAll", (req, res) => {
+    let userId = parseInt(req.body[0].userId);
+    let criteria = { "userId": userId };
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.getAll(criteria));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.getById(id));
+});
+router.delete("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.destroyById(id));
+});
+router.get("/activePayment/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.getPaymentActiveByUser(id));
+});
+router.post("/pay", (req, res) => {
+    let _service = new PaymentService(req, res);
+    c.handleService(res, _service.performPayment(req.body));
+});
 
 module.exports = router;

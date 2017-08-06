@@ -1,17 +1,31 @@
 var express = require("express");
-// var authenticated = require("../config/policies/authenticated");
-var TableController = require("../app/controllers").TableController;
+let c = require("../base/base.controller");
+var TableService = require("../app/services").TableService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", TableController.create);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", TableController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", TableController.getById);
-//noinspection JSUnresolvedFunction
-router.get("/restaurant/:id", TableController.getByRestaurant);
-//noinspection JSUnresolvedFunction
-router.put('/:id', TableController.updateById);
+
+router.post("/", (req, res) => {
+    let _service = new TableService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.post("/getAll", (req, res) => {
+    let _service = new TableService(req, res);
+    c.handleService(res, _service.getAll(req.body));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new TableService(req, res);
+    c.handleService(res, _service.getById(id));
+});
+router.get("/restaurant/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new TableService(req, res);
+    c.handleService(res, _service.getByRestaurant(id));
+});
+router.put('/:id', (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new TableService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
+});
 
 module.exports = router;

@@ -1,13 +1,21 @@
 var express = require("express");
-// var authenticated = require("../config/policies/authenticated");
-var ClientController = require("../app/controllers").ClientController;
+let c = require("../base/base.controller");
+var ClientService = require("../app/services").ClientService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", ClientController.create);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", ClientController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", ClientController.getById);
+
+router.post("/", (req, res) => {
+    let _service = new ClientService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.post("/getAll", (req, res) => {
+    let _service = new ClientService(req, res);
+    c.handleService(res, _service.getAll(req.body));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new ClientService(req, res);
+    c.handleService(res, _service.getById(id));
+});
 
 module.exports = router;

@@ -1,17 +1,26 @@
-/**
- * Created by gustavoquesada on 4/7/17.
- */
 var express = require("express");
-var CurrencyController = require("../app/controllers").CurrencyController;
+let c = require("../base/base.controller");
+var CurrencyService = require("../app/services").CurrencyService;
 
 var router = express.Router();
-//noinspection JSUnresolvedFunction
-router.post("/", CurrencyController.create);
-//noinspection JSUnresolvedFunction
-router.put("/:id", CurrencyController.updateById);
-//noinspection JSUnresolvedFunction
-router.post("/getAll", CurrencyController.getAll);
-//noinspection JSUnresolvedFunction
-router.get("/:id", CurrencyController.getById);
+
+router.post("/", (req, res) => {
+    let _service = new CurrencyService(req, res);
+    c.handleService(res, _service.create(req.body));
+});
+router.put("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new CurrencyService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
+});
+router.post("/getAll", (req, res) => {
+    let _service = new CurrencyService(req, res);
+    c.handleService(res, _service.getAll(req.body));
+});
+router.get("/:id", (req, res) => {
+    let id = parseInt(req.params["id"]);
+    let _service = new CurrencyService(req, res);
+    c.handleService(res, _service.getById(id));
+});
 
 module.exports = router;

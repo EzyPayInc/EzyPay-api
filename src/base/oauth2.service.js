@@ -3,7 +3,7 @@ const config = require("../config");
 var policies = require("../policies");
 var oauth2orize = require("oauth2orize");
 var oauth2Server = oauth2orize.createServer();
-var modelLoader = require("./model.loader.js");
+var modelLoader = require("./model.loader");
 
 class Oauth2Service {
 	static config() {
@@ -14,12 +14,9 @@ class Oauth2Service {
 					if (!user) {
 						callback(null, false);
 					} else {
-
-						if (scope && scope.find('facebook')) {
-							console.log('encontrado');
-						}
-
-
+						// if (scope && scope.find(x => x === 'facebook')) {
+						// 	console.log('encontrado');
+						// }
 						user.verifyPassword(password).then((isEqual) => {
 							if (!isEqual) {
 								callback(null, false);
@@ -53,6 +50,7 @@ class Oauth2Service {
 		return buffer.join('');
 	}
 }
+
 module.exports = {
 	Oauth2Service: Oauth2Service,
 	TokenEndpoint: [
