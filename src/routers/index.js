@@ -1,8 +1,30 @@
-/**
- * Created by dfonseca on 15/11/16.
- */
+const router = require('express').Router();
+const config = require("../config");
+const util = require('util');
 var policies = require("../policies");
-module.exports.use = (router) => {
+
+module.exports.paths = () => {
+    router.use((req, res, next) => {
+        if (config.http.logRequest) {
+            util.log(util.format("Request to: %s:%s -- Params:%s",
+                req.url, req.method, JSON.stringify(req.body)));
+        }
+        var origin = config.http.allowOrigin || req.header("Origin");
+        res.header("Access-Control-Allow-Origin", origin);
+        res.header("Access-Control-Allow-Methods", config.http.allowMethods);
+        res.header("Access-Control-Allow-Headers", config.http.allowHeaders);
+        res.header("Access-Control-Allow-Credentials", config.http.allowCredentials);
+        if ('OPTIONS' == req.method) {
+            res.sendStatus(200);
+        }
+        else {
+            next();
+        }
+    });
+    router.get("/", (req, res) => {
+        res.send(config.http.message);
+    });
+
     router.use("/auth", require('./router.auth'));
     router.use("/user", require('./router.user'));
     router.use("/card", policies.BearerAuth, require('./router.card'));
@@ -16,4 +38,6 @@ module.exports.use = (router) => {
     router.use("/notifications", policies.BearerAuth, require('./router.pushnotifications'));
     router.use("/userPayment", policies.BearerAuth, require('./router.userpayment'));
     router.use("/bankAccount", policies.BearerAuth, require('./router.bankaccount'));
-};
+
+    return router;
+}

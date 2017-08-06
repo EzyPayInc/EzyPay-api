@@ -1,7 +1,7 @@
 var bodyParser = require("body-parser");
 var session = require('express-session');
 var express = require("express");
-var router = require("./router");
+var routers = require('./routers');
 var config = require("./config");
 var oauth2Service = require("./base/oauth2.service").Oauth2Service;
 var passportService = require("./base/passport.service").PassportService;
@@ -21,9 +21,7 @@ app.use(session(config.session));
 passportService.config(app);
 oauth2Service.config();
 
-let _router = express.Router();
-router.config(_router);
-app.use(_router);
+app.use(routers.paths());
 
 app.use((err, req, res, next) => {
 	if (res.headersSent) {
