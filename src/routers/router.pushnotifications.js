@@ -1,12 +1,9 @@
-var express = require("express");
-let c = require("../base/base.controller");
+var router = require("express").Router();
 var PushNotificationsService = require("../app/services").PushNotificationsService;
-
-var router = express.Router();
 
 router.post('/callWaiter', (req, res) => {
     let _service = new PushNotificationsService(req, res);
-    c.handleService(res, _service.callWaiterNotification(
+    _service.handle(_service.callWaiterNotification(
         req.body.tableNumber,
         req.body.commerceId,
         req.body.paymentId
@@ -14,7 +11,7 @@ router.post('/callWaiter', (req, res) => {
 });
 router.post('/billRequest', (req, res) => {
     let _service = new PushNotificationsService(req, res);
-    c.handleService(res, _service.billRequestNotification(
+    _service.handle(_service.billRequestNotification(
         req.body.tableNumber,
         req.body.commerceId,
         req.body.paymentId
@@ -22,7 +19,7 @@ router.post('/billRequest', (req, res) => {
 });
 router.post('/sendBill', (req, res) => {
     let _service = new PushNotificationsService(req, res);
-    c.handleService(res, _service.sendBillNotification(
+    _service.handle(_service.sendBillNotification(
         req.body.clientId,
         req.body.amount,
         req.body.currencyCode,
@@ -31,14 +28,14 @@ router.post('/sendBill', (req, res) => {
 });
 router.post('/splitRequest', (req, res) => {
     let _service = new PushNotificationsService(req, res);
-    c.handleService(res, _service.splitRequestNotification(
+    _service.handle(_service.splitRequestNotification(
         req.body.data.payment,
         req.body.data.friends
     ));
 });
 router.post('/splitResponse', (req, res) => {
     let _service = new PushNotificationsService(req, res);
-    c.handleService(res, _service.responseSplitRequestNotification(
+    _service.handle(_service.responseSplitRequestNotification(
         req.body.userId,
         req.body.paymentId,
         req.body.response

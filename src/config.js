@@ -19,7 +19,6 @@ module.exports = {
         }
     },
     parameters: {
-        port: "8080",
         cryptoRounds: 10,
         modelsFolder: "/app/models",
         cloud_project: "ugwo-platform",
@@ -31,6 +30,7 @@ module.exports = {
         uidChars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },
     http: {
+        port: 8080,
         message: "EzyPay platform is online",
         logRequest: true,
         allowCredentials: true,
@@ -44,21 +44,21 @@ module.exports = {
             fileSize: 5 * 1024 * 1024 // no larger than 5mb
         }
     }),
-    httpMethods : {
-        GET : 'GET',
-        POST : 'POST',
-        PUT : 'PUT',
-        DELETE : 'DELETE'
+    httpMethods: {
+        GET: 'GET',
+        POST: 'POST',
+        PUT: 'PUT',
+        DELETE: 'DELETE'
     },
     greenPayConfig: {
         hostname: 'https://sandbox.greenpay.me',
-        login : {
+        login: {
             username: 'easypay',
             password: 'easypay7'
         },
-        paths : {
-            login : '/login',
-            customers : '/customers',
+        paths: {
+            login: '/login',
+            customers: '/customers',
             creditCards: '/customers/%d/creditCards/',
             transactions: '/transactions'
         }

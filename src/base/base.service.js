@@ -1,8 +1,6 @@
 "use strict";
-// const config = require('../config');
 const ModelLoader = require('./model.loader.js');
-
-class Service {
+exports.Service = class Service {
     constructor(req, res) {
         this.req = req;
         this.res = res;
@@ -10,10 +8,18 @@ class Service {
         this.DBs = ModelLoader.getInstance()._dbs;
         this.Models = ModelLoader.getInstance()._models;
         if (req.header("lang") !== null) {
-            //var path = util.format("../app/resources/strings_%s.js", req.header("lang"));
             var path = "../app/resources/strings_en.js";
             this.localizedStrings = require(path);
         }
     }
+    handle(service) {
+        service.then((result) => {
+            this.res.json(result);
+        }, (error) => {
+            console.error(error);
+            this.res.status(500).json({
+                message: error.message
+            });
+        });
+    };
 }
-exports.Service = Service;
