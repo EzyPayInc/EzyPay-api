@@ -9,29 +9,38 @@ class Oauth2Service {
 	static config() {
 		var Models = modelLoader.getInstance()._models;
 		oauth2Server.exchange(oauth2orize.exchange.password(
-			(client, username, password, scope, callback) => {
+			(client, username, password, scopes, callback) => {
+				var returnToken = (_user) => {
+					var token = {
+						userId: _user.id,
+						clientId: client.id,
+						value: this.buildUid(64)
+					};
+					Models.Token.create(token).then(
+						() => callback(null, token),
+						(error) => callback(error)
+					);
+				};
 				Models.User.findOne({ where: { email: username } }).then((user) => {
 					if (!user) {
 						callback(null, false);
 					} else {
-						// if (scope && scope.find(x => x === 'facebook')) {
-						// 	console.log('encontrado');
-						// }
-						user.verifyPassword(password).then((isEqual) => {
-							if (!isEqual) {
-								callback(null, false);
-							} else {
-								var token = {
-									userId: user.id,
-									clientId: client.id,
-									value: this.buildUid(64)
-								};
-								Models.Token.create(token).then(
-									() => callback(null, token),
-									(error) => callback(error)
-								);
-							}
-						}, (error) => callback(error));
+						if (scopes) {
+							scopes.forEach(scope => {
+								Models.UserCredential.verify(username, password, scope)
+									.then(credential => {
+										returnToken(user);
+									}, (error) => callback(error));
+							});
+						} else {
+							user.verifyPassword(password).then((isEqual) => {
+								if (!isEqual) {
+									callback(null, false);
+								} else {
+									returnToken(user);
+								}
+							}, (error) => callback(error));
+						}
 					}
 				});
 			})
