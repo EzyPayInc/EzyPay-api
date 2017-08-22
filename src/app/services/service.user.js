@@ -1,4 +1,3 @@
-var EmailHandler = require("../util/Email/EmailHandler").EmailHandler;
 const BaseService = require("../../base/base.service").Service;
 const GreenPayService = require("./service.greenpay");
 const config = require('../../config');

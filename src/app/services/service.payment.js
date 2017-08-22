@@ -1,7 +1,10 @@
 "use strict";
-const BaseService = require("../../base/base.service");
 const UserPaymentService = require("./service.payment");
+const BaseService = require("../../base/base.service");
+const EmailService = require("../../base/service.email");
 const GreenPayService = require("./service.greenpay");
+const cc = require('currency-symbol-map');
+const util = require('util');
 class PaymentService extends BaseService.Service {
 
     create(data) {
@@ -65,13 +68,13 @@ class PaymentService extends BaseService.Service {
                             )
                         },
                         (error) =>  reject(error)
-                    )
+                    );
+                    this.sendBillNotifications(payment);
+                    this.sendCommerceBillNotification(payment);
                 },
                 (error) => reject(error)
             )
         });
-        
-
     }
     
     updatePayment(payment) {
@@ -84,6 +87,47 @@ class PaymentService extends BaseService.Service {
                 (error) => resolve(error)
             )
         });
+    }
+
+    sendBillNotifications(payment) {
+        this.DBs[0].query('CALL sp_getPaymentInfo('+payment.id+');').then(
+            (result) => {
+                for(var i = 0; i < result.length; i++) {
+                    let payment = result[i];
+                    let currency = cc(payment.code);
+                    let emailBody =  util.format(this.localizedStrings.emailBillBody, payment.name, payment.lastname,
+                    payment.restaurant, currency, payment.cost, payment.cardNumber);
+                    var email = {
+                        email : payment.email,
+                        subject : "Ugwo Payment",
+                        body : emailBody
+                    };
+                    let emailService = new EmailService();
+                    emailService.sendEmail(email);
+                }
+            }
+        );
+    }
+
+    sendCommerceBillNotification(payment) {
+        this.DBs[0].query('CALL sp_getCommercePaymentInfo('+payment.id+');').then(
+            (result) => {
+                for(var i = 0; i < result.length; i++) {
+                    let payment = result[i];
+                    let currency = cc(payment.code);
+                    let emailBody =  util.format(this.localizedStrings.emailCommerceBillBody, payment.commerce, payment.name, payment.lastname,
+                    payment.paymentDate, currency, payment.cost, payment.tableNumber,
+                    payment.eName, payment.eLastname);
+                    var email = {
+                        email : payment.email,
+                        subject : "Ugwo Payment",
+                        body : emailBody
+                    };
+                    let emailService = new EmailService();
+                    emailService.sendEmail(email);
+                }
+            }
+        );
     }
 }
 module.exports = PaymentService;
