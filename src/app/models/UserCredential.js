@@ -18,20 +18,26 @@ module.exports = (sequelize, DataTypes) => {
 		}, {
 			timestamps: false,
 			freezeTableName: true,
-			tableName: "tb_user_credential"
+			tableName: "tb_user_credential",
+			hooks: {
+				beforeCreate: (credentials, options) => {
+					return new Promise((resolve, reject) => {
+						credentials.platform = credentials.platform.toLowerCase();
+					});
+				}
+			}
 		});
 
-	UserCredential.verify = function (username, credential, platform) {
+	UserCredential.verify = function (userId, credential, platform) {
 		return sequelize.query(
-			`SELECT credential, platform, email 
-			 FROM tb_user_credential t1, tb_user t2
-			 WHERE t1.userId = t2.userId
-			   and t2.email = $username
-			   and t1.platform= $platform
-			   and t1.credential= $credential`,
+			`SELECT userId, credential, platform
+			 FROM tb_user_credential t1
+			 WHERE t1.userId = $userId
+			   and t1.platform = $platform
+			   and t1.credential = $credential`,
 			{
 				bind: {
-					username: username,
+					userId: userId,
 					platform: platform,
 					credential: credential
 				}, type: sequelize.QueryTypes.SELECT

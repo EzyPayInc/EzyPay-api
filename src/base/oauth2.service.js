@@ -8,42 +8,67 @@ var modelLoader = require("./model.loader");
 class Oauth2Service {
 	static config() {
 		var Models = modelLoader.getInstance()._models;
-		oauth2Server.exchange(oauth2orize.exchange.password(
-			(client, username, password, scopes, callback) => {
-				var returnToken = (_user) => {
-					var token = {
-						userId: _user.id,
-						clientId: client.id,
-						value: this.buildUid(64)
-					};
-					Models.Token.create(token).then(
-						() => callback(null, token),
-						(error) => callback(error)
-					);
-				};
-				Models.User.findOne({ where: { email: username } }).then((user) => {
-					if (!user) {
-						callback(null, false);
-					} else {
-						if (scopes) {
-							scopes.forEach(scope => {
-								Models.UserCredential.verify(username, password, scope)
-									.then(credential => {
-										returnToken(user);
-									}, (error) => callback(error));
-							});
-						} else {
-							user.verifyPassword(password).then((isEqual) => {
-								if (!isEqual) {
-									callback(null, false);
-								} else {
-									returnToken(user);
-								}
-							}, (error) => callback(error));
+		oauth2Server.exchange(oauth2orize.exchange.password((client, username, password, scopes, callback) => {
+			Models.User.findOne({ where: { email: username } }).then((user) => {
+				if (!user) {
+					return callback(null, false);
+				}
+				if (scopes) {
+					Models.UserCredential.verify(
+						user.id,
+						password,
+						scopes[0]
+					).then(credential => {
+						if (!credential) {
+							return callback(null, false);
 						}
-					}
-				});
-			})
+						this.returnToken(client, user, callback);
+					});
+				} else {
+					user.verifyPassword(password).then((isEqual) => {
+						if (!isEqual) {
+							return callback(null, false);
+						}
+						this.returnToken(client, user, callback);
+					}, (error) => callback(error));
+				}
+			});
+		}));
+	}
+
+	static verifyCredential(client, data, callback) {
+		if (!data || !data.credentials) {
+			return callback(new Error('Invalid credentials'));
+		}
+		var Models = modelLoader.getInstance()._models;
+		Models.User.findOne({ where: { email: data.email } }).then((user) => {
+			if (!user) {
+				return callback(null, {});
+			}
+			Models.UserCredential.verify(
+				user.id,
+				data.credentials.credential,
+				data.credentials.platform
+			).then(credential => {
+				this.returnToken(client, user, callback);
+				if (!credential) {
+					data.credentials.userId = user.id;
+					Models.UserCredential.create(data.credentials);
+				}
+			}, (error) => callback(error));
+		});
+	}
+
+	static returnToken(_client, _user, callback) {
+		var token = {
+			clientId: _client.id,
+			userId: _user.id,
+			value: this.buildUid(64)
+		};
+		var Models = modelLoader.getInstance()._models;
+		Models.Token.create(token).then(
+			() => callback(null, token),
+			(error) => callback(error)
 		);
 	}
 

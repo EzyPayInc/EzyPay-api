@@ -36,7 +36,6 @@ class UserService extends BaseService {
 					}
 					if (data.credentials) {
 						data.credentials.userId = user.id;
-						data.credentials.platform = data.credentials.platform.toLowerCase();
 						this.Models.UserCredential.create(data.credentials);
 					}
 					resolve(user);
@@ -102,7 +101,7 @@ class UserService extends BaseService {
 		return this.DBs[0].query('CALL sp_getUserHistory('
 			+ userId + ');');
 	}
-	
+
 	userHistoryDates(userId) {
 		return this.DBs[0].query('CALL sp_userHistoryDates('
 			+ userId + ');');
@@ -112,7 +111,7 @@ class UserService extends BaseService {
 		return this.DBs[0].query('CALL sp_getCommerceHistory('
 			+ commerceId + ');');
 	}
-	
+
 	commerceHistoryDates(commerceId) {
 		return this.DBs[0].query('CALL sp_commerceHistoryDates('
 			+ commerceId + ');');
@@ -120,12 +119,12 @@ class UserService extends BaseService {
 
 	updatePassword(data) {
 		return new Promise((resolve, reject) => {
-			var criteria = {email : data.email};
+			var criteria = { email: data.email };
 			return this.getAll(criteria).then(
 				(result) => {
-					if(result.length > 0) {
+					if (result.length > 0) {
 						var user = {
-							password : data.newPassword
+							password: data.newPassword
 						}
 						this.updateById(user, result.id).then(
 							(result) => resolve(result),
