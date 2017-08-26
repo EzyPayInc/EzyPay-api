@@ -15,4 +15,5 @@ module.exports = {
     DeviceTokenService: require('./service.devicetoken'),
     UserPaymentService: require('./service.userpayment'),
     BankAccountService: require('./service.bankaccount'),
+    CountryService: require('./service.country')
 };
