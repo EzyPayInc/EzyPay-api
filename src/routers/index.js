@@ -38,6 +38,7 @@ module.exports.paths = () => {
     router.use("/notifications", policies.BearerAuth, require('./router.pushnotifications'));
     router.use("/userPayment", policies.BearerAuth, require('./router.userpayment'));
     router.use("/bankAccount", policies.BearerAuth, require('./router.bankaccount'));
+    router.use("/country", policies.ClientAuth, require('./router.country'));
 
     return router;
 }
