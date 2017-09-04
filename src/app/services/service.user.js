@@ -57,6 +57,11 @@ class UserService extends BaseService {
 		return this.Models.User.update(data, { where: { "id": id } });
 	}
 
+	update(criteria, data)
+	{
+		return this.Models.User.update(data, criteria);
+	}
+
 	validateAccount(id) {
 		return this.Models.User.update({
 			isValidatedAccount: 1
@@ -126,7 +131,8 @@ class UserService extends BaseService {
 						var user = {
 							password: data.newPassword
 						}
-						this.updateById(user, result.id).then(
+						var criteria = { where: { "id": result[0].id }, individualHooks: true };
+						this.update(criteria, user).then(
 							(result) => resolve(result),
 							(error) => reject(error)
 						)
