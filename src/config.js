@@ -69,7 +69,7 @@ module.exports = {
 		secure: true, // use SSL
 		auth: {
 			user: 'quesada.tavo@gmail.com',
-			pass: 'yami642009'
+			pass: 'samuel.642009'
 		}
     },
     pushNotifications: {

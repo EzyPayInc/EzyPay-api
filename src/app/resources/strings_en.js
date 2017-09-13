@@ -67,5 +67,22 @@ module.exports = {
                     "</tbody>" +
                 "</table>" +
             "</div>"+
-        "</div>" 
+        "</div>",
+    emailPasswordReset :
+        "<div style='border-style: solid; border-color: #BAD230; border-radius: 5px; display: block;'>" +
+            "<div style='background-color: #BAD230; display: inline-block; width: 100%;'> " +
+                "<h1 style='color: white; text-align: center;'>Ugwo Password</h1>" +
+            "</div>" +
+            "<div style='font-size:20px;'>" +
+                "<div  style='padding:10px;'>" +
+                    "<p> Buenas %s %s </p>" +
+                    "<p>" +
+                        "Hemos recibido una solicitud para resetear tu contaseña. Ingresa al siguiente link para escoger una nueva contraseña." +
+                    "</p>" +
+                    "<p>" +
+                        "Cambia tu password <a href='%s'>aquí</a>" +
+                    "</p>" +
+                "</div>" +
+            "</div>"+
+        "</div>"
 };

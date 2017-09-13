@@ -1,6 +1,11 @@
 const BaseService = require("../../base/base.service").Service;
+const EmailService = require("../../base/service.email");
 const GreenPayService = require("./service.greenpay");
 const config = require('../../config');
+const shortid = require('shortid');
+const util = require('util');
+var path = require('path');
+var fs = require("fs");
 
 class UserService extends BaseService {
 
@@ -142,5 +147,114 @@ class UserService extends BaseService {
 			)
 		})
 	}
+
+	passwordRecovery(data) {
+		return new Promise((resolve, reject) => {
+			var newObject = {
+				userEmail : data.email,
+				token : shortid.generate()
+			};
+			this.Models.PasswordRecovery.create(newObject).then(
+				(result) => {
+					resolve(result);
+					var criteria = {
+						email : data.email
+					};
+					this.getAll(criteria).then(
+						(user) => {
+							if(user.length > 0) {
+								let emailBody =  util.format(this.localizedStrings.emailPasswordReset, user[0].name, user[0].lastName, 
+								"http://192.168.1.103:8080/user/password/" + newObject.token);
+								var email = {
+									email : newObject.userEmail,
+									subject : "Ugwo Password Reset",
+									body : emailBody
+								};
+								let emailService = new EmailService();
+								emailService.sendEmail(email);
+							}
+						},
+						(error) => console.log(error)
+					);
+				},
+				(error) => reject(error)
+			);
+		});
+	}
+
+	validateToken(token) {
+		var criteria = {
+			token : token
+		};
+		return this.Models.PasswordRecovery.findAll({ where : criteria });
+	}
+
+	displayRecoveryPasswordView(token) {
+		this.validateToken(token).then(
+			(result) => {
+				if(result.length == 0) {
+					this.res.status(404).send('Not found');
+					return;
+				}
+				var self = this;
+				fs.readFile(path.join(__dirname, '../views/change_password.html'), function (err, html) {
+					if(err) {
+						self.res.status(500).json({
+							message: err.message
+						});
+						return;
+					}
+					self.res.writeHeader(200, {"Content-Type": "text/html"});  
+					self.res.write(html);  
+					self.res.end();
+				});
+			},
+			(error) => {
+				this.res.status(404).send('Not found');
+				return;
+			}
+		);
+	}
+
+	recoveryPassword(token, data) {
+		this.validateToken(token).then(
+			(result) => {
+				if(result.length == 0 || result[0].userEmail != data.email) {
+					this.res.status(404).send('Not found');
+					return;
+				}
+				this.updatePassword(data).then(
+					(user) => {
+						this.resetAuthData(data.email);
+						this.res.status(200).json(
+							{message : "Successfully"}
+						);
+					},
+					(error) => {
+						this.res.status(500).json(
+							{message : error.message}
+						);
+					}
+				)
+			},
+			(error) => {
+				this.res.status(500).json(
+					{message : error.message}
+				);
+			}
+		);
+	}
+
+	resetAuthData (email) {
+		this.getAll({email:email}).then(
+			(user) => {
+				if(user.length > 0) {
+					this.Models.PasswordRecovery.destroy({where: {userEmail : email}});
+					this.Models.Token.destroy({where: {userId : user[0].id}});
+				}
+			}
+		);
+	}
+
 }
 module.exports = UserService;

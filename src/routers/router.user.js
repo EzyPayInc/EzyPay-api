@@ -63,4 +63,22 @@ router.post('/password', policies.BearerAuth, (req, res) => {
     _service.handle(_service.updatePassword(req.body));
 });
 
+router.post('/forgotPassword', /*policies.ClientAuth,*/ (req, res) => {
+    let _service = new UserService(req, res);
+    _service.handle(_service.passwordRecovery(req.body));
+});
+
+router.get('/password/:token',(req, res) => {
+    let token = req.params["token"];
+    let _service = new UserService(req, res);
+    _service.displayRecoveryPasswordView(token);
+});
+
+router.post('/password/:token',(req, res) => {
+    let token = req.params["token"];
+    let data = req.body;
+    let _service = new UserService(req, res);
+    _service.recoveryPassword(token, data);
+});
+
 module.exports = router;
