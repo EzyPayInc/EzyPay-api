@@ -115,9 +115,15 @@ class PaymentService extends BaseService.Service {
                 for(var i = 0; i < result.length; i++) {
                     let payment = result[i];
                     let currency = cc(payment.code);
-                    let emailBody =  util.format(this.localizedStrings.emailCommerceBillBody, payment.commerce, payment.name, payment.lastname,
-                    payment.paymentDate, currency, payment.cost, payment.tableNumber,
-                    payment.eName, payment.eLastname);
+                    var emailBody = "";
+                    if(payment.eName != null){
+                        emailBody =  util.format(this.localizedStrings.emailCommerceBillBody, payment.commerce, payment.name, 
+                            payment.lastname,payment.paymentDate, currency, payment.cost, payment.tableNumber,
+                            payment.eName, payment.eLastname);
+                    } else {
+                        emailBody =  util.format(this.localizedStrings.emailCommerceBillNoEmployeeBody, payment.commerce, 
+                            payment.name, payment.lastname,payment.paymentDate, currency, payment.cost, payment.tableNumber);
+                    }
                     var email = {
                         email : payment.email,
                         subject : "Ugwo Payment",

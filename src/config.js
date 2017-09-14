@@ -68,8 +68,8 @@ module.exports = {
 		port: 465,
 		secure: true, // use SSL
 		auth: {
-			user: 'quesada.tavo@gmail.com',
-			pass: 'samuel.642009'
+			user: 'xxxxxxx',
+			pass: 'xxxxxx'
 		}
     },
     pushNotifications: {
