@@ -10,22 +10,46 @@ var fs = require("fs");
 class UserService extends BaseService {
 
 	create(data) {
-		var greenPayService = new GreenPayService(this.req, this.res);
-		if (data.userType == 1) {
-			return new Promise((resolve, reject) => {
-				greenPayService.createCustomer(data).then(
-					(response) => {
-						data.customerId = response.id;
-						this.saveUser(data).then(
-							(result) => resolve(result),
-							(error) => reject(error)
-						);
-					},
-					(error) => reject(error)
-				);
-			});
-		}
-		return this.saveUser(data);
+		return new Promise((resolve, reject) =>{
+			var criteria = { email:data.email };
+			this.getAll(criteria).then(
+				(user) => {
+					if(user.length == 0) {
+						if (data.userType == 1) {
+							this.saveGreenPayService(data).then(
+								(result) => resolve(result),
+								(error) => reject(error)
+							);
+						} else {
+							this.saveUser(data).then(
+								(result) => resolve(result),
+								(error) => reject(error)
+							);
+						}
+					} else {
+						let error = {message : "UNIQUE_EMAIL"};
+						reject(error);
+					}
+				},
+				(error) => reject(error)
+			)
+		});
+	}
+
+	saveGreenPayService(data) {
+		return new Promise((resolve, reject) => {
+			let greenPayService = new GreenPayService(this.req, this.res);
+			greenPayService.createCustomer(data).then(
+				(response) => {
+					data.customerId = response.id;
+					this.saveUser(data).then(
+						(result) => resolve(result),
+						(error) => reject(error)
+					);
+				},
+				(error) => reject(error)
+			);
+		});
 	}
 
 	saveUser(data) {
@@ -52,6 +76,21 @@ class UserService extends BaseService {
 
 	getAll(criteria) {
 		return this.Models.User.findAll({ where: criteria });
+	}
+
+	validateEmail(data) {
+		return new Promise((resolve, reject) => {
+			this.getAll(data).then(
+				(result) => {
+					if(result.length > 0) {
+						resolve({user:1});
+					} else {
+						resolve({user:0});
+					}
+				},
+				(error) => reject(error)
+			);
+		});
 	}
 
 	getById(id) {

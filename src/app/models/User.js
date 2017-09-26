@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
 			autoIncrement: true
 		},
 		email: {
-			unique: true,
+			unique: {
+				args: true,
+				msg: 'UNIQUE_EMAIL'
+			},
 			type: DataTypes.STRING,
 			validate: { notEmpty: true }
 		},

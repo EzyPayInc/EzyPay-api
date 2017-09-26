@@ -22,6 +22,12 @@ router.put('/:id', policies.BearerAuth, (req, res) => {
     let _service = new UserService(req, res);
     _service.handle(_service.updateById(id, req.body));
 });
+
+router.post("/email/", policies.ClientAuth, (req, res) => {
+    let _service = new UserService(req, res);
+    _service.handle(_service.validateEmail(req.body));
+});
+
 router.get('/validate/:id', policies.BearerAuth, (req, res) => {
     //TODO: se debe enviar un codigo de confirmacion
     let id = parseInt(req.params["id"]);
