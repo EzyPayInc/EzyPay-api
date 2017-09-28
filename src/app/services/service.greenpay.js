@@ -89,7 +89,7 @@ class GreenPayService extends BaseService.Service {
         var card = {
             cardHolderName: data.cardHolderName,
             cardNumber: data.cardNumber,
-            cardVendor: 1,
+            cardVendor: data.cardVendor,
             ccv: data.ccv,
             expirationDate: data.expirationDate,
             favorite: true,
@@ -110,7 +110,7 @@ class GreenPayService extends BaseService.Service {
         var card = {
             ccv: data.ccv,
             expirationDate: data.expirationDate,
-            favorite: true,
+            favorite: data.isFavorite,
             nickname: "string"
         };
         var options = {

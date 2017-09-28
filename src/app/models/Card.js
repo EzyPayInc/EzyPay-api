@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes)=> {
 		ccv: DataTypes.INTEGER,
 		expirationDate: DataTypes.STRING,
 		serverId: DataTypes.INTEGER,
-		isFavorite: DataTypes.INTEGER,		
+		isFavorite: DataTypes.INTEGER,
+		cardVendor: DataTypes.INTEGER,		
 		token : DataTypes.STRING
 	}, {
 		timestamps: false,
