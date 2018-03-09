@@ -4,6 +4,7 @@ const BaseService = require("../../base/base.service");
 const EmailService = require("../../base/service.email");
 const GreenPayService = require("./service.greenpay");
 const cc = require('currency-symbol-map');
+const config = require('../../config');
 const util = require('util');
 class PaymentService extends BaseService.Service {
 
@@ -37,6 +38,14 @@ class PaymentService extends BaseService.Service {
             this.DBs[0].query('CALL sp_getPaymentActive('+id+');').then(
                 (result)=> {
                     if(result.length > 0) {
+                        let avatar = result[0].Payment.Commerce.avatar;
+                        result[0].Payment.Commerce.avatar = config.parameters.cloud_file_url(avatar);
+                        if(result[0].Payment.Friends != null) {
+                            for(let i = 0; i < result[0].Payment.Friends.length; i++) {
+                                let friendAvatar = result[0].Payment.Friends[i].avatar;
+                                result[0].Payment.Friends[i].avatar = config.parameters.cloud_file_url(friendAvatar);
+                            }
+                        }
                         resolve(result[0].Payment);
                     } else {
                         resolve(result);

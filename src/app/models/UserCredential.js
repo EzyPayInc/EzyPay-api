@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 				beforeCreate: (credentials, options) => {
 					return new Promise((resolve, reject) => {
 						credentials.platform = credentials.platform.toLowerCase();
+						resolve(credentials);
 					});
 				}
 			}

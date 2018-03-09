@@ -18,7 +18,8 @@ class PushNotificationsService extends BaseService.Service {
                         this.user.name, this.user.lastName, tableNumber);
                     let category = pushCategories.callWaiter;
                     let custom = {"paymentId" : paymentId};
-                    let notification = this.createNotification(title, body, category, custom);
+                    let clickAction = ".controllers.commerceNavigation.navigation.MainCommerceActivity";
+                    let notification = this.createNotification(title, body, category, custom, clickAction);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
                             resolve(results);
@@ -46,7 +47,8 @@ class PushNotificationsService extends BaseService.Service {
                         this.user.name, this.user.lastName, tableNumber);
                     let category = pushCategories.requestBill;
                     let custom = { paymentId:paymentId };
-                    let notification = this.createNotification(title, body, category, custom);
+                    let clickAction = ".controllers.commerceNavigation.navigation.MainCommerceActivity";
+                    let notification = this.createNotification(title, body, category, custom, clickAction);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
                             resolve(results);
@@ -73,7 +75,8 @@ class PushNotificationsService extends BaseService.Service {
                         currencyCode, amount);
                     let category = pushCategories.sendBill;
                     let custom = { paymentId : paymentId };
-                    let notification = this.createNotification(title, body, category, custom);
+                    let clickAction = ".controllers.userNavigation.navigation.MainUserActivity";
+                    let notification = this.createNotification(title, body, category, custom, clickAction);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
                             resolve(results);
@@ -96,19 +99,20 @@ class PushNotificationsService extends BaseService.Service {
             for (var i = 0; i < friends.length; i++) {
                 let userCriteria = {"userId": friends[i].id};
                 let custom = {paymentId : payment.paymentId, userId: this.user.id, friendId: friends[i].id};
-                this.createSplitRequestNotification(title, category, custom, userCriteria, payment, friends[i].cost);
+                let clickAction = ".controllers.userNavigation.navigation.MainUserActivity";
+                this.createSplitRequestNotification(title, category, custom, userCriteria, payment, friends[i].cost, clickAction);
             }
             resolve({success:1});
         });
     }
 
-    createSplitRequestNotification(title, category, custom, userCriteria, payment, cost) {
+    createSplitRequestNotification(title, category, custom, userCriteria, payment, cost, clickAction) {
         let _service = new DeviceTokenService(this.req, this.res);
         _service.getAll(userCriteria).then(
             (result) => {
                 let body = util.format(this.localizedStrings.splitRequestNotificationBody,
                     this.user.name,this.user.lastName, payment.currency, cost);
-                let notification = this.createNotification(title, body, category, custom);
+                let notification = this.createNotification(title, body, category, custom, clickAction);
                 this.sendNotification(this.getDeviceTokens(result), notification);
             }
         );
@@ -125,8 +129,9 @@ class PushNotificationsService extends BaseService.Service {
                         this.localizedStrings.negativeSplitResponseNotificationBody;
                     let body = util.format(bodyResponse,this.user.name, this.user.lastName);
                     let category = pushCategories.splitResponse;
-                    let custom = {paymentId: paymentId};
-                    let notification = this.createNotification(title, body, category, custom);
+                    let custom = {paymentId: paymentId, category: category};
+                    let clickAction = ".controllers.userNavigation.navigation.MainUserActivity";
+                    let notification = this.createNotification(title, body, category, custom, clickAction);
                     this.sendNotification(this.getDeviceTokens(result), notification)
                         .then((results) => {
                             resolve(results);
@@ -142,15 +147,20 @@ class PushNotificationsService extends BaseService.Service {
         });
     }
 
-    createNotification(title, body, category, custom) {
+    createNotification(title, body, category, custom, clickAction) {
+        custom.category = category;
         var data = {
             topic:'net.ezypay.EzyPay',
             title: title,
             body: body,
             priority: 'high',
             sound: 'ping.aiff',
+            tag: category,
             category: category,
-            custom: custom
+            custom: custom,
+            data : custom,
+            message: custom,
+            clickAction : clickAction
         };
 
         return data;

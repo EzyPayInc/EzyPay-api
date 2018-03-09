@@ -203,7 +203,7 @@ class UserService extends BaseService {
 						(user) => {
 							if(user.length > 0) {
 								let emailBody =  util.format(this.localizedStrings.emailPasswordReset, user[0].name, user[0].lastName, 
-								"http://192.168.1.103:8080/user/password/" + newObject.token);
+								"https://ugwo-platform.appspot.com/user/password/" + newObject.token);
 								var email = {
 									email : newObject.userEmail,
 									subject : "Ugwo Password Reset",
